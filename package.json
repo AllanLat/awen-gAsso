@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "dotenv": "^16.1.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.3.3"
+  },
+  "name": "awen-gasso",
+  "description": "REST API for G_ASSO App",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AWEN DEVELOPPEMENT",
+  "license": "ISC"
+}
