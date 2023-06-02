@@ -8,7 +8,8 @@
   "name": "awen-gasso",
   "description": "REST API for G_ASSO App",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
+  "main": "database.js",
   "scripts": {
     "start": "npx nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
