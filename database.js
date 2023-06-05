@@ -1,19 +1,21 @@
 import mysql from 'mysql2';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 // connection to database parameters
 const pool = mysql.createPool({
-    host: '127.0.0.1',
-    user: 'root',
-    password: '',
-    database: 'g_asso'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 }).promise()
 
 
-const [rows] = await pool.execute('SELECT * FROM associations');
-/*  
-    equals to :
-    const result = await pool.query('SELECT * FROM associations');
-    const rows = result[0]; 
-*/
+async function getAssociations () {
+    const [rows] = await pool.execute('SELECT * FROM associations');
+    return rows;
+}
 
-console.log(rows);
+const associations = await getAssociations();
+console.log(associations);
