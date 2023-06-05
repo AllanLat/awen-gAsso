@@ -1,19 +1,13 @@
 import express from 'express'
-import { getAssociations, getAssociation, createAssociation } from './database.js'
+import associations from './Routes/associations.js'
 
 const app = express()
+app.use(express.json())
+
+// Routes //
+app.use('/api/v1/associations', associations)
 
 
-
-app.get("/associations", async (req, res) => {
-    const associations = await getAssociations();
-    res.send(associations);
-})
-
-app.get ("/associations/:id", async (req, res) => {
-    const association = await getAssociation(req.params.id);
-    res.send(association);
-})
 
 
 // Traitement d’erreurs. Code copié depuis https://expressjs.com/fr/guide/error-handling.html
