@@ -1,5 +1,7 @@
 import express from 'express'
+
 import associations from './Routes/associations.js'
+
 
 const app = express()
 app.use(express.json())

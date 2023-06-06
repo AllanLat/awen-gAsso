@@ -1,5 +1,5 @@
 import express from 'express'
-import { getAssociations, getAssociation, createAssociation, updateAssociation, deleteAssociation } from '../Querries/associations.js'
+import { getAssociations, getAssociation, createAssociation, updateAssociation, deleteAssociation, getUsersByAssociationId, getDayGroupsByAssociationId } from '../Querries/associations.js'
 
 const router = express.Router()
 
@@ -28,6 +28,16 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     const association = await deleteAssociation(req.params.id);
     res.status(200).send(association);
+})
+
+router.get("/:id/users", async (req, res) => {
+    const users = await getUsersByAssociationId(req.params.id);
+    res.send(users);
+})
+
+router.get("/:id/day_groups", async (req, res) => {
+    const dayGroups = await getDayGroupsByAssociationId(req.params.id);
+    res.send(dayGroups);
 })
 
 export default router

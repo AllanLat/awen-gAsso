@@ -38,7 +38,25 @@ export async function updateAssociation(id, name, mail, members_max, members_cou
 
 // supprime une association en fonction de son id
 export async function deleteAssociation(id) {
-    const association = await getAssociation(id);
-    await pool.query('DELETE FROM associations WHERE id = ?', [id]);
-    return `Association ${association.name} supprimée`;       
+    const [result] = await pool.query(`
+        DELETE FROM associations
+        WHERE id = ?
+    `, [id]);
+}
+
+// retourne tous les users d'une association en fonction de son id 
+export async function getUsersByAssociationId(id) {
+    const [rows] = await pool.query('SELECT * FROM users WHERE association_id = ?', [id]);
+    return rows;
+}
+
+// retourne tous les groupes du jour (ou 0 = lundi, 1 = mardi, ...) d'une association en fonction de son id
+export async function getDayGroupsByAssociationId(id) {
+    // on trouve le numéro correspondant à aujourd'hui
+    let actualDay = new Date().getDay();
+    // si le numéro est 0 (dimanche) alors on le passe à 7 pour coller à notre bdd
+    if (actualDay === 0) actualDay = 7;
+    
+    const [rows] = await pool.query('SELECT * FROM `groups` WHERE association_id = ? AND group_day = ?', [id, actualDay]);
+    return rows;
 }
