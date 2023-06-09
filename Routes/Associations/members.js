@@ -5,10 +5,9 @@ import {
     getMemberByIdAndAssociation,
     getMemberDetailsById,
     getAddressById,
-} from '../../Querries/associations.js'
+} from '../../Querries/Associations/associations.js'
 
 const router = express.Router()
-
 
 
 

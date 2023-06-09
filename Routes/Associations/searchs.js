@@ -1,8 +1,7 @@
 import express from 'express'
-
 import { 
     getMembersByLastname
-} from '../../Querries/associations.js'
+} from '../../Querries/Associations/associations.js'
 
 const router = express.Router()
 
@@ -12,7 +11,6 @@ const router = express.Router()
 router.get("/members", async (req, res) => {
     const { lastname } = req.query; 
     const association_id = req.associationId; // on récupère ici l'id de l'association
-    console.log(association_id, lastname);
     const filteredMembers = await getMembersByLastname(lastname, association_id);
     res.send(filteredMembers);
 })
