@@ -1,15 +1,106 @@
 import express from 'express'
 
 import {
-    getDayGroups
+    getDayGroups,
+    getGroup,
+    getGroupMembers,
+    updateGroupPresence,
+    createGroup,
+    updateGroup
 } from '../../Querries/Associations/associations.js'
 
 const router = express.Router()
 
+
+// GET //
+
 router.get("/day_groups", async (req, res) => {
-    const association_id = req.associationId
-    const dayGroups = await getDayGroups(association_id);
-    res.send(dayGroups);
+    try {
+        const association_id = req.associationId
+        // on trouve le numéro correspondant à aujourd'hui
+        let actualDay = new Date().getDay();
+        // si le numéro est 0 (dimanche) alors on le passe à 7 pour coller à notre bdd
+        if (actualDay === 0) actualDay = 7;
+
+        const dayGroups = await getDayGroups(association_id, actualDay);
+        res.send(dayGroups);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la récupération des groupes du jour.");
+    }
+})
+
+router.get("/day/:day_id", async (req, res) => {
+    try {
+        const association_id = req.associationId
+        const dayGroups = await getDayGroups(association_id, req.params.day_id);
+        res.send(dayGroups);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la récupération des groupes de ce jour.");
+    }
+})
+
+router.get("/:group_id", async (req, res) => {
+    try {
+        const group = await getGroup(req.params.group_id);
+        res.send(group);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la récupération du groupe.");
+    }
+})
+
+router.get("/:group_id/members", async (req, res) => {
+    try {
+        const group = await getGroup(req.params.group_id);
+        const members = await getGroupMembers(group.id);
+        res.send(members);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la récupération des membres du groupe.");
+    }
+})
+
+// POST //
+
+router.post("/", async (req, res) => {
+    try {
+        const { name, group_day, members_max, start_time, end_time } = req.body;
+        const association_id = req.associationId
+        const group = await createGroup(name, association_id, group_day, members_max, start_time, end_time);
+        res.send(`Le groupe ${group.name} a été créé.`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la création du groupe.");
+    }
+})
+
+// PUT //
+
+router.put("/:group_id", async (req, res) => {
+    try {
+        const { name, group_day, members_max, start_time, end_time } = req.body;
+        const id = req.params.group_id
+        const association_id = req.associationId
+        const group = await updateGroup(id, name, association_id, group_day, members_max, start_time, end_time);
+        res.send(`Le groupe ${group.name} a été modifié avec succès.`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la modification du groupe.");
+    }
+})
+
+router.put("/:group_id/presence", async (req, res) => {
+    try {
+        const group = await getGroup(req.params.group_id);
+        const group_name = group.name
+        await updateGroupPresence(group.id, req.body.members_list);
+        res.send(`Les présences du groupe ${group_name} ont été mises à jour.`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de l'assignation des présences du groupe");
+    }
 })
 
 export default router

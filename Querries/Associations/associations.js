@@ -50,15 +50,47 @@ export async function getUsers(id) {
     return rows;
 }
 
-// retourne tous les groupes du jour (ou 0 = lundi, 1 = mardi, ...) d'une association en fonction de son id
-export async function getDayGroups(id) {
-    // on trouve le numéro correspondant à aujourd'hui
-    let actualDay = new Date().getDay();
-    // si le numéro est 0 (dimanche) alors on le passe à 7 pour coller à notre bdd
-    if (actualDay === 0) actualDay = 7;
-
-    const [rows] = await pool.query('SELECT * FROM `groups` WHERE association_id = ? AND group_day = ?', [id, actualDay]);
+// retourne tous les groupes d'un jour (ou 0 = lundi, 1 = mardi, ...) en fonction de son id
+export async function getDayGroups(association_id, day) {
+    const [rows] = await pool.query('SELECT * FROM `groups` WHERE association_id = ? AND group_day = ?', [association_id, day]);
     return rows;
+}
+
+// retourne un groupe en fonction de son id 
+export async function getGroup(group_id) {
+    const [rows] = await pool.query('SELECT * FROM `groups` WHERE id = ?', [group_id]);
+    return rows[0];
+}
+
+// Retourne tous les membres d'un groupe en fonction de son ID
+export async function getGroupMembers(group_id) {
+    const [rows] = await pool.query(
+        'SELECT members.* FROM members JOIN members_groups ON members.id = members_groups.member_id WHERE members_groups.group_id = ?',
+        [group_id]
+    );
+    return rows;
+}
+
+// ajoute 1 à presence_count de la table members_groups pour chaque membre d'un tableau de membres
+export async function updateGroupPresence(group_id, membersList) {
+    const [result] = await pool.query(
+        'UPDATE members_groups SET presence_count = presence_count + 1 WHERE group_id = ? AND member_id IN (?)',
+        [group_id, membersList]
+    );
+}
+
+// ajoute un groupe 
+export async function createGroup(name, association_id, group_day, members_max, start_time, end_time) {
+    const [result] = await pool.query("INSERT INTO `groups` (name, association_id, group_day, members_max, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?)",
+        [name, association_id, group_day, members_max, start_time, end_time]);
+    return getGroup(result.insertId);
+}
+
+// modifie un groupe
+export async function updateGroup(id, name, association_id, group_day, members_max, start_time, end_time) {
+    const [result] = await pool.query("UPDATE `groups` SET name = ?, association_id = ?, group_day = ?, members_max = ?, start_time = ?, end_time = ? WHERE id = ?",
+        [name, association_id, group_day, members_max, start_time, end_time, id]);
+    return getGroup(id);
 }
 
 // retourne tous les membres d'une association en fonction de son id

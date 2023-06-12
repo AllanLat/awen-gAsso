@@ -46,14 +46,14 @@ router.get("/:id", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-    const { name, mail, members_max, members_count, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color } = req.body;
-    const association = await createAssociation(name, mail, members_max, members_count, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color);
+    const { name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color } = req.body;
+    const association = await createAssociation(name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color);
     res.status(201).send(association);
 })
 
 router.put("/:id", async (req, res) => {
-    const { name, mail, members_max, members_count, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color } = req.body;
-    const association = await updateAssociation(req.params.id, name, mail, members_max, members_count, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color);
+    const { name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color } = req.body;
+    const association = await updateAssociation(req.params.id, name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color);
     res.status(201).send(association);
 })
 
