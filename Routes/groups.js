@@ -13,7 +13,7 @@ import {
     deleteMemberFromGroup,
     deleteUserFromGroup,
     deleteGroup
-} from '../../Querries/Associations/associations.js'
+} from '../Querries/associations.js'
 
 const router = express.Router()
 

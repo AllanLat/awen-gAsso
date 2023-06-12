@@ -4,11 +4,14 @@ import {
     getMembers,
     getMemberById,
     getMemberDetailsById,
-    getAddressById,
     createMember,
     updateMember,
     getAssociation,
-} from '../../Querries/Associations/associations.js'
+} from '../Querries/associations.js'
+
+import {
+    getAddressById,
+} from '../Querries/addresses.js'
 
 const router = express.Router()
 

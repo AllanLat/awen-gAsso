@@ -5,7 +5,7 @@ import {
     createAssociation,
     updateAssociation,
     deleteAssociation,
-} from '../../Querries/Associations/associations.js'
+} from '../Querries/associations.js'
 
 import searchs from './searchs.js'
 import members from './members.js'
