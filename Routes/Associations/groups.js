@@ -6,7 +6,13 @@ import {
     getGroupMembers,
     updateGroupPresence,
     createGroup,
-    updateGroup
+    updateGroup,
+    getGroupUsers,
+    addMemberToGroup,
+    addUserToGroup,
+    deleteMemberFromGroup,
+    deleteUserFromGroup,
+    deleteGroup
 } from '../../Querries/Associations/associations.js'
 
 const router = express.Router()
@@ -62,6 +68,17 @@ router.get("/:group_id/members", async (req, res) => {
     }
 })
 
+router.get("/:group_id/users", async (req, res) => {
+    try {
+        const group = await getGroup(req.params.group_id);
+        const users = await getGroupUsers(group.id);
+        res.send(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la récupération des membres du groupe.");
+    }
+})
+
 // POST //
 
 router.post("/", async (req, res) => {
@@ -73,6 +90,34 @@ router.post("/", async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Une erreur est survenue lors de la création du groupe.");
+    }
+})
+
+router.post("/:group_id/members", async (req, res) => {
+    try {
+        const group = await getGroup(req.params.group_id);
+        const group_name = group.name
+        await req.body.members_list.forEach(member => {
+            addMemberToGroup(group.id, member);
+        });
+        res.send(`Les membres ${req.body.members_list.join(", ")} ont été ajouté au groupe ${group_name} avec succès.`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de l'ajout des membres au groupe.");
+    }
+})
+
+router.post("/:group_id/users", async (req, res) => {
+    try {
+        const group = await getGroup(req.params.group_id);
+        const group_name = group.name
+        await req.body.users_list.forEach(member => {
+            addUserToGroup(group.id, member);
+        });
+        res.send(`Les users ${req.body.users_list.join(", ")} ont été ajouté au groupe ${group_name} avec succès.`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de l'ajout des users au groupe.");
     }
 })
 
@@ -100,6 +145,47 @@ router.put("/:group_id/presence", async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Une erreur est survenue lors de l'assignation des présences du groupe");
+    }
+})
+
+// DELETE //
+
+router.delete("/:group_id", async (req, res) => {
+    try {
+        const id = req.params.group_id
+        const group = await deleteGroup(id);
+        res.send(`Le groupe ${group.name} a été supprimé avec succès.`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la suppression du groupe.");
+    }
+})
+
+router.delete("/:group_id/members", async (req, res) => {
+    try {
+        const group = await getGroup(req.params.group_id);
+        const group_name = group.name
+        await req.body.members_list.forEach(member => {
+            deleteMemberFromGroup(group.id, member);
+        });
+        res.send(`Les membres ${req.body.members_list.join(", ")} du groupe ${group_name} ont été supprimé.`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la suppression des membres du groupe.");
+    }
+})
+
+router.delete("/:group_id/users", async (req, res) => {
+    try {
+        const group = await getGroup(req.params.group_id);
+        const group_name = group.name
+        await req.body.users_list.forEach(member => {
+            deleteUserFromGroup(group.id, member);
+        });
+        res.send(`Les users ${req.body.users_list.join(", ")} du groupe ${group_name} ont été supprimé.`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la suppression des users du groupe.");
     }
 })
 
