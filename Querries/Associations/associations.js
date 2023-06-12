@@ -45,13 +45,13 @@ export async function deleteAssociation(id) {
 }
 
 // retourne tous les users d'une association en fonction de son id 
-export async function getUsersByAssociationId(id) {
+export async function getUsers(id) {
     const [rows] = await pool.query('SELECT * FROM users WHERE association_id = ?', [id]);
     return rows;
 }
 
 // retourne tous les groupes du jour (ou 0 = lundi, 1 = mardi, ...) d'une association en fonction de son id
-export async function getDayGroupsByAssociationId(id) {
+export async function getDayGroups(id) {
     // on trouve le numéro correspondant à aujourd'hui
     let actualDay = new Date().getDay();
     // si le numéro est 0 (dimanche) alors on le passe à 7 pour coller à notre bdd
@@ -62,13 +62,13 @@ export async function getDayGroupsByAssociationId(id) {
 }
 
 // retourne tous les membres d'une association en fonction de son id
-export async function getMembersByAssociationId(id) {
+export async function getMembers(id) {
     const [rows] = await pool.query('SELECT * FROM members WHERE association_id = ?', [id]);
     return rows;
 }
 
 // retourne le membre en fonction de son id et de son association
-export async function getMemberByIdAndAssociation(member_id, association_id) {
+export async function getMemberById(member_id, association_id) {
     const [rows] = await pool.query('SELECT * FROM members WHERE id = ? AND association_id = ?', [member_id, association_id]);
     return rows[0];
 }
@@ -94,4 +94,34 @@ export async function getMembersByLastname(lastname, association_id) {
         [`%${lastname}%`, association_id]
     );
     return rows;
+}
+
+// ajoute une adresse 
+export async function createAddress(street, postal_code, city) {
+    const [result] = await pool.query(`
+        INSERT INTO addresses (street, postal_code, city)
+        VALUES (?, ?, ?)
+    `,
+        [street, postal_code, city]);
+    return result.insertId;
+}
+
+// ajoute les détails d'un membre 
+export async function createMemberDetails(address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature) {
+    const [result] = await pool.query(`
+        INSERT INTO member_details (address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+        [address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature]);
+    return result.insertId;
+}
+
+// ajoute un membre
+export async function createMember(firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, certificate, subscription, paid) {
+    const [result] = await pool.query(`
+        INSERT INTO members (firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, certificate, subscription, paid)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+        [firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, certificate, subscription, paid]);
+    return getMemberById(result.insertId, association_id);
 }
