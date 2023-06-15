@@ -7,32 +7,7 @@ import {
     deleteAssociation,
 } from '../Querries/associations.js'
 
-import searchs from './searchs.js'
-import members from './members.js'
-import groups from './groups.js'
-
 const router = express.Router()
-
-// données en dur pour le dev mais à terme sera récupérer depuis la requête client
-const authLevel = 3
-const association_id = 7
-
-
-// Routes vers endpoints spécifiques //
-router.use("/members", (req, res, next) => {
-    req.associationId = association_id; // Cette ligne permet d'envoyer l'id de l'association
-    next();
-}, members);
-router.use("/search", (req, res, next) => {
-    req.associationId = association_id;
-    next();
-}, searchs);
-router.use("/groups", (req, res, next) => {
-    req.associationId = association_id;
-    next();
-}, groups);
-
-
 
 // Endpoints pour le super admin //
 router.get("/", async (req, res) => {

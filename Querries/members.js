@@ -63,6 +63,13 @@ export async function getMembers(id) {
     return rows;
 }
 
+//retourne le nombre de membre d'une association en fonction de son id
+export async function getMembersCount(id) {
+    const count = await pool.query('SELECT COUNT(*) FROM members WHERE association_id = ?', [id]);
+    const members_count = count[0][0]["COUNT(*)"];
+    return members_count;
+}
+
 // retourne le membre en fonction de son id et de son association
 export async function getMemberById(member_id, association_id) {
     const [rows] = await pool.query('SELECT * FROM members WHERE id = ? AND association_id = ?', [member_id, association_id]);

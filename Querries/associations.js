@@ -5,7 +5,8 @@ import {
     updateMember,
     getMembers,
     getMemberById,
-    getMemberDetailsById
+    getMemberDetailsById,
+    getMembersCount
 } from './members.js';
 
 import {
@@ -20,7 +21,8 @@ import {
     deleteGroup,
     updateGroup,
     createGroup,
-    updateGroupPresence
+    updateGroupPresence,
+    getDayGroupsCount
 } from './groups.js';
 
 import {
@@ -124,5 +126,7 @@ export {
     updateGroup,
     createGroup,
     updateGroupPresence,
-    getMembersByLastname
+    getMembersByLastname,
+    getMembersCount,
+    getDayGroupsCount
 }

@@ -12,17 +12,19 @@ import {
     addUserToGroup,
     deleteMemberFromGroup,
     deleteUserFromGroup,
-    deleteGroup
+    deleteGroup,
+    getDayGroupsCount
 } from '../Querries/associations.js'
 
 const router = express.Router()
+
 
 
 // GET //
 
 router.get("/day_groups", async (req, res) => {
     try {
-        const association_id = req.associationId
+        const association_id = 7
         // on trouve le numéro correspondant à aujourd'hui
         let actualDay = new Date().getDay();
         // si le numéro est 0 (dimanche) alors on le passe à 7 pour coller à notre bdd
@@ -36,9 +38,25 @@ router.get("/day_groups", async (req, res) => {
     }
 })
 
+router.get("/day_groups/count", async (req, res) => {
+    try {
+        const association_id = 7
+        // on trouve le numéro correspondant à aujourd'hui
+        let actualDay = new Date().getDay();
+        // si le numéro est 0 (dimanche) alors on le passe à 7 pour coller à notre bdd
+        if (actualDay === 0) actualDay = 7;
+
+        const dayGroups_count = await getDayGroupsCount(association_id, actualDay);
+        res.status(200).json({ day_groups_count: dayGroups_count });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Une erreur est survenue lors de la récupération des groupes du jour.");
+    }
+})
+
 router.get("/day/:day_id", async (req, res) => {
     try {
-        const association_id = req.associationId
+        const association_id = 7
         const dayGroups = await getDayGroups(association_id, req.params.day_id);
         res.send(dayGroups);
     } catch (error) {
@@ -49,7 +67,10 @@ router.get("/day/:day_id", async (req, res) => {
 
 router.get("/:group_id", async (req, res) => {
     try {
-        const group = await getGroup(req.params.group_id);
+        const group = await getGroup(req.params.group_id, 7);
+        if (!group) {
+            return res.status(404).send("Le groupe n'existe pas.");
+        }
         res.send(group);
     } catch (error) {
         console.error(error);
@@ -59,7 +80,10 @@ router.get("/:group_id", async (req, res) => {
 
 router.get("/:group_id/members", async (req, res) => {
     try {
-        const group = await getGroup(req.params.group_id);
+        const group = await getGroup(req.params.group_id, 7);
+        if (!group) {
+            return res.status(404).send("Le groupe n'existe pas.");
+        }
         const members = await getGroupMembers(group.id);
         res.send(members);
     } catch (error) {
@@ -70,7 +94,10 @@ router.get("/:group_id/members", async (req, res) => {
 
 router.get("/:group_id/users", async (req, res) => {
     try {
-        const group = await getGroup(req.params.group_id);
+        const group = await getGroup(req.params.group_id, 7);
+        if (!group) {
+            return res.status(404).send("Le groupe n'existe pas.");
+        }
         const users = await getGroupUsers(group.id);
         res.send(users);
     } catch (error) {
@@ -84,9 +111,9 @@ router.get("/:group_id/users", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const { name, group_day, members_max, start_time, end_time } = req.body;
-        const association_id = req.associationId
+        const association_id = 7
         const group = await createGroup(name, association_id, group_day, members_max, start_time, end_time);
-        res.send(`Le groupe ${group.name} a été créé.`);
+        res.send(`Le groupe ${name} a été créé.`);
     } catch (error) {
         console.error(error);
         res.status(500).send("Une erreur est survenue lors de la création du groupe.");
@@ -95,7 +122,7 @@ router.post("/", async (req, res) => {
 
 router.post("/:group_id/members", async (req, res) => {
     try {
-        const group = await getGroup(req.params.group_id);
+        const group = await getGroup(req.params.group_id, 7);
         const group_name = group.name
         await req.body.members_list.forEach(member => {
             addMemberToGroup(group.id, member);
@@ -109,7 +136,7 @@ router.post("/:group_id/members", async (req, res) => {
 
 router.post("/:group_id/users", async (req, res) => {
     try {
-        const group = await getGroup(req.params.group_id);
+        const group = await getGroup(req.params.group_id, 7);
         const group_name = group.name
         await req.body.users_list.forEach(member => {
             addUserToGroup(group.id, member);
@@ -127,9 +154,12 @@ router.put("/:group_id", async (req, res) => {
     try {
         const { name, group_day, members_max, start_time, end_time } = req.body;
         const id = req.params.group_id
-        const association_id = req.associationId
-        const group = await updateGroup(id, name, association_id, group_day, members_max, start_time, end_time);
-        res.send(`Le groupe ${group.name} a été modifié avec succès.`);
+        const group = await getGroup(req.params.group_id, 7);
+        if (!group) {
+            return res.status(404).send("Le groupe n'existe pas.");
+        }
+        const update_group = await updateGroup(id, name, group_day, members_max, start_time, end_time);
+        res.send(`Le groupe avec l'id ${id} a été modifié avec succès.`);
     } catch (error) {
         console.error(error);
         res.status(500).send("Une erreur est survenue lors de la modification du groupe.");
@@ -138,7 +168,10 @@ router.put("/:group_id", async (req, res) => {
 
 router.put("/:group_id/presence", async (req, res) => {
     try {
-        const group = await getGroup(req.params.group_id);
+        const group = await getGroup(req.params.group_id, 7);
+        if (!group) {
+            return res.status(404).send("Le groupe n'existe pas.");
+        }
         const group_name = group.name
         await updateGroupPresence(group.id, req.body.members_list);
         res.send(`Les présences du groupe ${group_name} ont été mises à jour.`);
@@ -163,7 +196,7 @@ router.delete("/:group_id", async (req, res) => {
 
 router.delete("/:group_id/members", async (req, res) => {
     try {
-        const group = await getGroup(req.params.group_id);
+        const group = await getGroup(req.params.group_id, 7);
         const group_name = group.name
         await req.body.members_list.forEach(member => {
             deleteMemberFromGroup(group.id, member);
@@ -177,7 +210,7 @@ router.delete("/:group_id/members", async (req, res) => {
 
 router.delete("/:group_id/users", async (req, res) => {
     try {
-        const group = await getGroup(req.params.group_id);
+        const group = await getGroup(req.params.group_id, 7);
         const group_name = group.name
         await req.body.users_list.forEach(member => {
             deleteUserFromGroup(group.id, member);

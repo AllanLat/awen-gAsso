@@ -6,9 +6,15 @@ export async function getDayGroups(association_id, day) {
     return rows;
 }
 
+// retourne le nombre de groupes du jour
+export async function getDayGroupsCount(association_id, day) {
+    const count = await pool.query('SELECT COUNT(*) FROM `groups` WHERE association_id = ? AND group_day = ?', [association_id, day]);
+    return count[0][0]["COUNT(*)"];
+}
+
 // retourne un groupe en fonction de son id 
-export async function getGroup(group_id) {
-    const [rows] = await pool.query('SELECT * FROM `groups` WHERE id = ?', [group_id]);
+export async function getGroup(group_id, association_id) {
+    const [rows] = await pool.query('SELECT * FROM `groups` WHERE id = ? AND association_id = ?' , [group_id, association_id]);
     return rows[0];
 }
 
@@ -101,9 +107,9 @@ export async function createGroup(name, association_id, group_day, members_max, 
 }
 
 // modifie un groupe
-export async function updateGroup(id, name, association_id, group_day, members_max, start_time, end_time) {
-    const [result] = await pool.query("UPDATE `groups` SET name = ?, association_id = ?, group_day = ?, members_max = ?, start_time = ?, end_time = ? WHERE id = ?",
-        [name, association_id, group_day, members_max, start_time, end_time, id]);
+export async function updateGroup(id, name, group_day, members_max, start_time, end_time) {
+    const [result] = await pool.query("UPDATE `groups` SET name = ?, group_day = ?, members_max = ?, start_time = ?, end_time = ? WHERE id = ?",
+        [name, group_day, members_max, start_time, end_time, id]);
     return getGroup(id);
 }
 
