@@ -1,4 +1,5 @@
 import express from 'express'
+import auth from '../Middleware/auth.js'
 import {
     getAssociations,
     getAssociation,
@@ -9,45 +10,65 @@ import {
 
 const router = express.Router()
 
+
+
+
+
 // Endpoints pour le super admin //
 router.get("/", async (req, res) => {
+    if (req.auth.userLvl !== 2) {
+        return res.status(403).send("Vous n'avez pas les droits d'accès.");
+    }
+
     try {
         const associations = await getAssociations();
         res.send(associations);
     } catch (error) {
-        console.error(error);
+        
         res.status(500).send("Une erreur est survenue lors de la récupération des associations.");
     }
 })
 
 router.get("/:id", async (req, res) => {
+    if (req.auth.userLvl !== 2) {
+        return res.status(403).send("Vous n'avez pas les droits d'accès.");
+    }
+
     try {
         const association = await getAssociation(req.params.id);
         res.send(association);
     } catch (error) {
-        console.error(error);
+        
         res.status(500).send("Une erreur est survenue lors de la récupération de l'association.");
     }
 })
 
 router.post("/", async (req, res) => {
+    if (req.auth.userLvl !== 2) {
+        return res.status(403).send("Vous n'avez pas les droits d'accès.");
+    }
+
     try {
         const { name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color } = req.body;
         const association = await createAssociation(name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color);
         res.status(201).send(association);
     } catch (error) {
-        console.error(error);
+        
         res.status(500).send("Une erreur est survenue lors de la création de l'association.");
     }
 })
 
 router.put("/:id", async (req, res) => {
+    if (req.auth.userLvl !== 2) {
+        return res.status(403).send("Vous n'avez pas les droits d'accès.");
+    }
+    
     try {
         const { name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color } = req.body;
         const association = await updateAssociation(req.params.id, name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color);
         res.status(201).send(association);
     } catch (error) {
-        console.error(error);
+        
         res.status(500).send("Une erreur est survenue lors de la modification de l'association.");
     }
 })

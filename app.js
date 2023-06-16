@@ -1,4 +1,7 @@
 import express from 'express'
+import auth from './Middleware/auth.js'
+
+import login from './Routes/login.js'
 
 import associations from './Routes/associations.js'
 import groups from './Routes/groups.js'
@@ -17,11 +20,12 @@ app.use((req, res, next) => {
 });
 
 // Routes //
-app.use('/api/v1/associations', associations)
-app.use("/api/v1/groups", groups)
-app.use("/api/v1/members", members)
-app.use("/api/v1/searchs", searchs)
-app.use("/api/v1/users", users)
+app.post("/api/v1/login", login)
+app.use('/api/v1/associations', auth, associations)
+app.use("/api/v1/groups", auth, groups)
+app.use("/api/v1/members", auth, members)
+app.use("/api/v1/searchs", auth, searchs)
+app.use("/api/v1/users", auth, users)
 
 // Traitement d’erreurs. Code copié depuis https://expressjs.com/fr/guide/error-handling.html
 app.use(function (err, req, res, next) {

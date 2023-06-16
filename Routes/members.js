@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
         const members = await getMembers(7);
         res.send(members);
     } catch (error) {
-        console.error(error);
+        
         res.status(500).send("Une erreur est survenue lors de la récupération des membres.");
     }
 });
@@ -30,7 +30,7 @@ router.get("/count", async (req, res) => {
         const members = await getMembersCount(7);
         res.status(200).json({ members_count: members });
     } catch (error) {
-        console.error(error);
+        
         res.status(500).send("Une erreur est survenue lors de la récupération des membres.");
     }
 })
@@ -46,7 +46,7 @@ router.get("/:member_id", async (req, res) => {
 
         res.send(member);
     } catch (error) {
-        console.error(error);
+        
         res.status(500).send("Une erreur est survenue lors de la récupération des informations du membre.");
     }
 });
@@ -59,6 +59,9 @@ router.get("/:member_id", async (req, res) => {
 // POST // 
 
 router.post("/", async (req, res) => {
+    if (req.auth.userLvl < 1) {
+        return res.status(403).send("Vous n'avez pas les droits d'accès.");
+    }
     try {
         const { street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, certificate, subscription, paid } = req.body;
 
@@ -71,7 +74,7 @@ router.post("/", async (req, res) => {
 
         res.status(201).send(`Le membre ${firstname} ${lastname} a bien été ajouté à l'association.`);
     } catch (error) {
-        console.error(error);
+        
         res.status(500).send("Une erreur est survenue lors de la création du membre.");
     }
 });
@@ -79,6 +82,9 @@ router.post("/", async (req, res) => {
 // PUT //
 
 router.put("/:member_id", async (req, res) => {
+    if (req.auth.userLvl < 1) {
+        return res.status(403).send("Vous n'avez pas les droits d'accès.");
+    }
     const member = await getMemberById(req.params.member_id, 7);
     console.log(member)
     if (!member) {
@@ -101,7 +107,7 @@ router.put("/:member_id", async (req, res) => {
 
             res.status(200).send(`Les informations du membre avec l'ID ${member_id} ont été mises à jour.`);
         } catch (error) {
-            console.error(error);
+            
             res.status(500).send("Une erreur est survenue lors de la mise à jour des informations du membre.");
         }
     }

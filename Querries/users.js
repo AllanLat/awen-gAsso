@@ -8,9 +8,15 @@ export async function getUsers() {
     return rows;
 }
 
-// retourne un user
+// retourne un user en fonction de son id
 export async function getUser(id) {
     const [rows] = await pool.query('SELECT * FROM users WHERE id = ? AND association_id = ?', [id, association_id]);
+    return rows[0];
+}
+
+// retourne un user en fonction de son login
+export async function getUserByLogin(login) {
+    const [rows] = await pool.query('SELECT * FROM users WHERE login = ?', [login]);
     return rows[0];
 }
 
