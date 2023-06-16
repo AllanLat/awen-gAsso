@@ -1,7 +1,7 @@
 import express from 'express'
 import { 
     getMembersByLastname
-} from '../Querries/associations.js'
+} from '../Querries/searchs.js'
 
 const router = express.Router()
 

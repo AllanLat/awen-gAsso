@@ -14,7 +14,7 @@ import {
     deleteUserFromGroup,
     deleteGroup,
     getDayGroupsCount
-} from '../Querries/associations.js'
+} from '../Querries/groups.js'
 
 const router = express.Router()
 

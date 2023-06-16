@@ -1,34 +1,5 @@
 import pool from '../Utils/pool.js';
 
-import {
-    createMember,
-    updateMember,
-    getMembers,
-    getMemberById,
-    getMemberDetailsById,
-    getMembersCount
-} from './members.js';
-
-import {
-    getDayGroups,
-    getGroup,
-    getGroupMembers,
-    getGroupUsers,
-    addMemberToGroup,
-    addUserToGroup,
-    deleteMemberFromGroup,
-    deleteUserFromGroup,
-    deleteGroup,
-    updateGroup,
-    createGroup,
-    updateGroupPresence,
-    getDayGroupsCount
-} from './groups.js';
-
-import {
-    getMembersByLastname
-} from './searchs.js';
-
 // retourne toutes les associations sous forme d'objets dans un tabeau
 export async function getAssociations() {
     const [rows] = await pool.query('SELECT * FROM associations');
@@ -103,30 +74,3 @@ export async function getUsers(id) {
 
 
 
-
-
-
-
-
-export {
-    createMember,
-    updateMember,
-    getMembers,
-    getMemberById,
-    getMemberDetailsById,
-    getDayGroups,
-    getGroup,
-    getGroupMembers,
-    getGroupUsers,
-    addMemberToGroup,
-    addUserToGroup,
-    deleteMemberFromGroup,
-    deleteUserFromGroup,
-    deleteGroup,
-    updateGroup,
-    createGroup,
-    updateGroupPresence,
-    getMembersByLastname,
-    getMembersCount,
-    getDayGroupsCount
-}
