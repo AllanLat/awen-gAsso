@@ -17,7 +17,7 @@ const router = express.Router()
 // GET //
 router.get("/", async (req, res) => {
     try {
-        const members = await getMembers(7);
+        const members = await getMembers(req.auth.associationId);
         res.send(members);
     } catch (error) {
         
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
 
 router.get("/count", async (req, res) => {
     try {
-        const members = await getMembersCount(7);
+        const members = await getMembersCount(req.auth.associationId);
         res.status(200).json({ members_count: members });
     } catch (error) {
         
@@ -37,7 +37,10 @@ router.get("/count", async (req, res) => {
 
 router.get("/:member_id", async (req, res) => {
     try {
-        const member = await getMemberById(req.params.member_id, 7);
+        const member = await getMemberById(req.params.member_id, req.auth.associationId);
+        if (!member) {
+           return res.status(404).send("Le membre n'existe pas.");
+        }
         const member_detail = await getMemberDetailsById(member.member_details_id);
         const address = await getAddressById(member_detail.address_id);
 

@@ -11,6 +11,7 @@ const login = async (req, res, next) => {
         }
 
         const isValid = await (req.body.password, user.password)
+        /* const isValid = bcrypt.compareSync(req.body.password, user.password) */
         if (!isValid) {
             return res.status(401).json({ message: 'Connexion non autorisée.' })
         }

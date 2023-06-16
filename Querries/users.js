@@ -9,8 +9,8 @@ export async function getUsers() {
 }
 
 // retourne un user en fonction de son id
-export async function getUser(id) {
-    const [rows] = await pool.query('SELECT * FROM users WHERE id = ? AND association_id = ?', [id, association_id]);
+export async function getUser(id, association) {
+    const [rows] = await pool.query('SELECT * FROM users WHERE id = ? AND association_id = ?', [id, association]);
     return rows[0];
 }
 
