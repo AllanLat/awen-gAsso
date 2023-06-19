@@ -29,12 +29,12 @@ export async function createUser(firstname, lastname, mail, login, password, pho
 }
 
 // modifie un user
-export async function updateUser(id, firstname, lastname, mail, login, password, phone_number) {
+export async function updateUser(id, firstname, lastname, mail, password, phone_number) {
     const [result] = await pool.query(`
         UPDATE users
-        SET firstname = ?, lastname = ?, mail = ?, login = ?, password = ?, phone_number = ?
+        SET firstname = ?, lastname = ?, mail = ?, password = ?, phone_number = ?
         WHERE id = ?
-    `, [firstname, lastname, mail, login, password, phone_number, id]);
+    `, [firstname, lastname, mail, password, phone_number, id]);
 }
 
 // retourne tous les groupes d'un user 
