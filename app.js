@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import auth from './Middleware/auth.js'
 
 import login from './Routes/login.js'
@@ -13,12 +14,7 @@ const app = express()
 app.use(express.json())
 
 // pour gérer les erreurs CORS
-app.use((req, res, next) => { 
-    res.setHeader('Access-Control-Allow-Origin', '*'); 
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'); 
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS'); 
-    next(); 
-});
+app.use(cors());
 
 // Routes //
 app.post("/api/v1/login", login)
