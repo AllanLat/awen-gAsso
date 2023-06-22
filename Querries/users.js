@@ -1,9 +1,9 @@
 import pool from '../Utils/pool.js';
 
-const association_id = 7
+/* const association_id = 7 */
 
 // retourne tous les users d'une association
-export async function getUsers() {
+export async function getUsers(association_id) {
     const [rows] = await pool.query('SELECT * FROM users WHERE association_id = ?', [association_id]);
     return rows;
 }
@@ -21,7 +21,7 @@ export async function getUserByLogin(login) {
 }
 
 // ajoute un user 
-export async function createUser(firstname, lastname, mail, login, password, phone_number) {
+export async function createUser(association_id, firstname, lastname, mail, login, password, phone_number) {
     const [result] = await pool.query(`
         INSERT INTO users (association_id, firstname, lastname, mail, login, password, phone_number)
         VALUES (?, ?, ?, ?, ?, ?, ?)
