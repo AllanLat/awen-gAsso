@@ -60,7 +60,24 @@ export async function updateMember(member_id, address_id, member_details_id, str
 // retourne tous les membres d'une association en fonction de son id
 export async function getMembers(id) {
     const [rows] = await pool.query('SELECT * FROM members WHERE association_id = ?', [id]);
-    return rows;
+    
+    // Parcourir les lignes et convertir les photos en base64
+    const rowsWithBase64Images = rows.map(row => {
+        // Si photo existe, la convertir en base64
+        if (row.photo) {
+            let base64Image = row.photo.toString('base64');
+            return {
+                ...row,
+                photo: base64Image
+            };
+        } 
+        // Sinon, renvoyer la ligne sans modification
+        else {
+            return row;
+        }
+    });
+    
+    return rowsWithBase64Images;
 }
 
 //retourne le nombre de membre d'une association en fonction de son id
@@ -73,8 +90,29 @@ export async function getMembersCount(id) {
 // retourne le membre en fonction de son id et de son association
 export async function getMemberById(member_id, association_id) {
     const [rows] = await pool.query('SELECT * FROM members WHERE id = ? AND association_id = ?', [member_id, association_id]);
-    return rows[0];
+
+    // Si aucun membre n'est trouvé, renvoyer null ou undefined
+    if (rows.length === 0) {
+        return null;
+    }
+
+    // Sinon, obtenir le premier membre
+    let member = rows[0];
+
+    // Si une photo existe, la convertir en base64
+    if (member.photo) {
+        let base64Image = member.photo.toString('base64');
+        return {
+            ...member,
+            photo: base64Image
+        };
+    } 
+    // Sinon, renvoyer le membre sans modification
+    else {
+        return member;
+    }
 }
+
 
 // retourne les détails d'un membre en fonction de son id
 export async function getMemberDetailsById(id) {
