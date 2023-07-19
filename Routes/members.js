@@ -61,19 +61,24 @@ router.get("/:member_id", async (req, res) => {
 // POST // 
 
 router.post("/", async (req, res) => {
+    
     if (req.auth.userLvl < 1) {
         return res.status(403).json("Vous n'avez pas les droits d'accès.");
     }
     try {
-        const { street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, certificate, subscription, paid } = req.body;
+        console.log(req.body);
+        console.log(req.files)
+
+
 
         // Créer le membre avec toutes les informations
-        const member = await createMember(street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, req.auth.associationId, certificate, subscription, paid);
+        /* const member = await createMember(street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, req.auth.associationId, certificate, subscription, paid);
 
-        res.status(201).json(`Le membre ${firstname} ${lastname} a bien été ajouté à l'association.`);
+        res.status(201).json(`Le membre ${firstname} ${lastname} a bien été ajouté à l'association.`); */
+
     } catch (error) {
         
-        res.status(500).json("Une erreur est survenue lors de la création du membre.");
+        console.log(error)
     }
 });
 
