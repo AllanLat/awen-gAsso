@@ -6,6 +6,7 @@ import {
     createAssociation,
     updateAssociation,
     deleteAssociation,
+    getLogo
 } from '../Querries/associations.js'
 
 const router = express.Router()
@@ -73,6 +74,16 @@ router.put("/:id", async (req, res) => {
     }
 })
 
+// Endpoints pour users
+router.get("/associationLogo/:id", async (req, res) => {
+    try {
+        const associations = await getLogo(req.params.id);
+        res.json(associations);  
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("Une erreur est survenue lors de la récupération des associations.");
+    }
+})
 
 
 
