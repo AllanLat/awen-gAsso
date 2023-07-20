@@ -1,3 +1,4 @@
+import e from 'express';
 import pool from '../Utils/pool.js';
 import { createAddress, updateAddress } from './addresses.js';
 
@@ -21,17 +22,11 @@ export async function createMember(street, postal_code, city, mail, birthday, co
         const photoBuffer = await photo.arrayBuffer();
         const photoBytes = new Uint8Array(photoBuffer);
         photo = Buffer.from(photoBytes)
-        console.log(photoBuffer)
-        console.log(photoBytes)
-        console.log(photo)
     }
     if (image_rights_signature !== null) {
         const image_rights_signatureBuffer = await image_rights_signature.arrayBuffer();
         const image_rights_signatureBytes = new Uint8Array(image_rights_signatureBuffer);
         image_rights_signature = Buffer.from(image_rights_signatureBytes)
-        console.log(image_rights_signatureBuffer)
-        console.log(image_rights_signatureBytes)
-        console.log(image_rights_signature)
     }
 
     // Créer une nouvelle adresse
@@ -41,7 +36,7 @@ export async function createMember(street, postal_code, city, mail, birthday, co
     const memberDetails = await createMemberDetails(address, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature);
 
     // Extraire les données binaires de l'objet Blob
-    
+
 
     // Créer le membre en utilisant les détails du membre créés précédemment
     const [result] = await pool.query(`
@@ -53,17 +48,37 @@ export async function createMember(street, postal_code, city, mail, birthday, co
 }
 
 // Modifie les détails d'un membre existant
-export async function updateMemberDetails(detailsId, addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, imageRightsSignature) {
-    await pool.query(`
+export async function updateMemberDetails(detailsId, addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature) {
+    if (image_rights_signature === null) {
+        await pool.query(`
+        UPDATE member_details
+        SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?
+        WHERE id = ?
+    `,
+            [addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, detailsId]);
+    } else {
+        await pool.query(`
         UPDATE member_details
         SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, image_rights_signature = ?
         WHERE id = ?
     `,
-        [addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, imageRightsSignature, detailsId]);
+            [addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, detailsId]);
+    }
 }
 
 // Modifie un membre existant
 export async function updateMember(member_id, address_id, member_details_id, street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, association_id, certificate, subscription, paid) {
+    // on traite les blobs s'ils sont pas null
+    if (photo !== null) {
+        const photoBuffer = await photo.arrayBuffer();
+        const photoBytes = new Uint8Array(photoBuffer);
+        photo = Buffer.from(photoBytes)
+    }
+    if (image_rights_signature !== null) {
+        const image_rights_signatureBuffer = await image_rights_signature.arrayBuffer();
+        const image_rights_signatureBytes = new Uint8Array(image_rights_signatureBuffer);
+        image_rights_signature = Buffer.from(image_rights_signatureBytes)
+    }
     // Modifier l'adresse existante
     await updateAddress(address_id, street, postal_code, city);
 
@@ -71,12 +86,22 @@ export async function updateMember(member_id, address_id, member_details_id, str
     await updateMemberDetails(member_details_id, address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature);
 
     // Modifier le membre
-    await pool.query(`
+    if (photo === null) {
+        await pool.query(`
+        UPDATE members
+        SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, association_id = ?, certificate = ?, subscription = ?, paid = ?
+        WHERE id = ?
+    `,
+            [firstname, lastname, file_status, payment_status, member_details_id, association_id, certificate, subscription, paid, member_id]);
+    } else {
+        await pool.query(`
         UPDATE members
         SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, photo = ?, association_id = ?, certificate = ?, subscription = ?, paid = ?
         WHERE id = ?
     `,
-        [firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, certificate, subscription, paid, member_id]);
+            [firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, certificate, subscription, paid, member_id]);
+    }
+
 }
 
 // retourne tous les membres d'une association en fonction de son id

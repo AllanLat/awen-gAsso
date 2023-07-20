@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, getUser, createUser, getUserByLogin, updateUser, getGroups } from '../Querries/users.js'
+import { getUsers, getUser, createUser, getUserByLogin, updateUser, getGroups, getUsersCount } from '../Querries/users.js'
 import bcrypt from 'bcrypt'
 
 const router = express.Router()
@@ -16,6 +16,16 @@ router.get("/", async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json("Une erreur est survenue.");
+    }
+})
+
+router.get("/count", async (req, res) => {
+    try {
+        const users = await getUsersCount(req.auth.associationId);
+        res.status(200).json({ users_count: users });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("Une erreur est survenue lors de la récupération des users.");
     }
 })
 

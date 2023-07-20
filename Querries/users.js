@@ -14,6 +14,13 @@ export async function getUser(id, association) {
     return rows[0];
 }
 
+// retourne le nombre de users d'une association
+export async function getUsersCount(id) {
+    const count = await pool.query('SELECT COUNT(*) FROM users WHERE association_id = ?', [id]);
+    const users_count = count[0][0]["COUNT(*)"];
+    return users_count;
+}
+
 // retourne un user en fonction de son login
 export async function getUserByLogin(login) {
     const [rows] = await pool.query('SELECT * FROM users WHERE login = ?', [login]);
