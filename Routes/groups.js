@@ -36,7 +36,7 @@ router.get("/day_groups", async (req, res) => {
         const dayGroups = await getDayGroups(association_id, actualDay);
         res.json(dayGroups);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des groupes du jour.");
     }
 })
@@ -52,7 +52,7 @@ router.get("/day_groups/count", async (req, res) => {
         const dayGroups_count = await getDayGroupsCount(association_id, actualDay);
         res.status(200).json({ day_groups_count: dayGroups_count });
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des groupes du jour.");
     }
 })
@@ -63,7 +63,7 @@ router.get("/day/:day_id", async (req, res) => {
         const dayGroups = await getDayGroups(association_id, req.params.day_id);
         res.json(dayGroups);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des groupes de ce jour.");
     }
 })
@@ -76,7 +76,7 @@ router.get("/:group_id", async (req, res) => {
         }
         res.json(group);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération du groupe.");
     }
 })
@@ -101,7 +101,7 @@ router.get("/:group_id/members", async (req, res) => {
         const members = await getGroupMembers(group.id);
         res.json(members);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des membres du groupe.");
     }
 })
@@ -125,7 +125,7 @@ router.get("/:group_id/users", async (req, res) => {
         const users = await getGroupUsers(group.id);
         res.json(users);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des membres du groupe.");
     }
 })
@@ -142,7 +142,7 @@ router.post("/", async (req, res) => {
         const group = await createGroup(name, association_id, group_day, members_max, start_time, end_time);
         res.json(`Le groupe ${name} a été créé.`);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la création du groupe.");
     }
 })
@@ -186,6 +186,7 @@ router.post("/:group_id/members", async (req, res) => {
 
         res.status(200).json(`Les membres ${req.body.members_list.join(", ")} ont été ajoutés au groupe ${group_name} avec succès.`);
     } catch (error) {
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de l'ajout des membres au groupe.");
     }
 });
@@ -224,7 +225,7 @@ router.post("/:group_id/users", async (req, res) => {
 
         res.status(200).json(`Les users ${req.body.users_list.join(", ")} ont été ajouté au groupe ${group_name} avec succès.`);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de l'ajout des users au groupe.");
     }
 })
@@ -245,7 +246,7 @@ router.put("/:group_id", async (req, res) => {
         const update_group = await updateGroup(id, name, group_day, members_max, start_time, end_time);
         res.json(`Le groupe avec l'id ${id} a été modifié avec succès.`);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la modification du groupe.");
     }
 })
@@ -279,6 +280,7 @@ router.put("/:group_id/presence", async (req, res) => {
         await updateGroupPresence(group.id, members_list);
         res.json(`Les présences du groupe ${group_name} ont été mises à jour.`);
     } catch (error) {
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de l'assignation des présences du groupe");
     }
 });
@@ -296,7 +298,7 @@ router.put("/:group_id/presence", async (req, res) => {
         const group = await deleteGroup(id);
         res.json(`Le groupe ${group.name} a été supprimé avec succès.`);
     } catch (error) {
-        
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la suppression du groupe.");
     }
 }) */
@@ -331,7 +333,7 @@ router.delete("/:group_id/members", async (req, res) => {
         });
         res.json(`Les membres ${req.body.members_list.join(", ")} du groupe ${group_name} ont été supprimé.`);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la suppression des membres du groupe.");
     }
 })
@@ -360,7 +362,7 @@ router.delete("/:group_id/users", async (req, res) => {
         });
         res.json(`Les users ${req.body.users_list.join(", ")} du groupe ${group_name} ont été supprimé.`);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la suppression des users du groupe.");
     }
 })

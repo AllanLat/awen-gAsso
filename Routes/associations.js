@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
         const associations = await getAssociations();
         res.json(associations);
     } catch (error) {
-        
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des associations.");
     }
 })
@@ -38,6 +38,7 @@ router.get("/:id", async (req, res) => {
         const association = await getAssociation(req.params.id);
         res.json(association);
     } catch (error) {
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération de l'association.");
     }
 })
@@ -52,7 +53,7 @@ router.post("/", async (req, res) => {
         const association = await createAssociation(name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color);
         res.status(201).json(association);
     } catch (error) {
-        
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la création de l'association.");
     }
 })
@@ -67,7 +68,7 @@ router.put("/:id", async (req, res) => {
         const association = await updateAssociation(req.params.id, name, mail, address_id, logo, primary_light_color, secondary_light_color, primary_dark_color, secondary_dark_color);
         res.status(201).json(association);
     } catch (error) {
-        
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la modification de l'association.");
     }
 })

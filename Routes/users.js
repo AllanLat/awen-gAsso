@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
         const users = await getUsers(req.auth.associationId);
         res.status(200).json(users);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue.");
     }
 })
@@ -31,7 +31,7 @@ router.get("/:user_id", async (req, res) => {
         }
         res.status(200).json(user);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue.");
     }
 })
@@ -52,7 +52,7 @@ router.get("/:user_id/groups", async (req, res) => {
             const groups = await getGroups(user_id);
             res.status(200).json(groups);
         } catch (error) {
-
+            console.log(error)
             res.status(500).json("Une erreur est survenue.");
         }
     }
@@ -73,6 +73,7 @@ router.post("/", async (req, res) => {
         const user = await createUser(req.auth.associationId, firstname, lastname, mail, login, hashedPassword, phone_number);
         res.status(201).json(`Le user ${firstname} ${lastname} a bien été créé.`);
     } catch (error) {
+        console.log(error)
         res.status(500).json("Une erreur est survenue.");
     }
 })
@@ -100,7 +101,7 @@ router.put("/:user_id", async (req, res) => {
         const updated_user = await updateUser(user_id, firstname, lastname, mail, hashedPassword, phone_number);
         res.status(200).json(`Le user ${firstname} ${lastname} a bien été modifié.`);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la modification du membre.");
     }
 

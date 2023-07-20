@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
         const members = await getMembers(req.auth.associationId);
         res.json(members);
     } catch (error) {
-        
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des membres.");
     }
 });
@@ -30,7 +30,7 @@ router.get("/count", async (req, res) => {
         const members = await getMembersCount(req.auth.associationId);
         res.status(200).json({ members_count: members });
     } catch (error) {
-        
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des membres.");
     }
 })
@@ -49,7 +49,7 @@ router.get("/:member_id", async (req, res) => {
 
         res.json(member);
     } catch (error) {
-        
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération des informations du membre.");
     }
 });
@@ -134,7 +134,7 @@ router.put("/:member_id", async (req, res) => {
 
             res.status(200).json(`Les informations du membre avec l'ID ${member_id} ont été mises à jour.`);
         } catch (error) {
-            
+            console.log(error);
             res.status(500).json("Une erreur est survenue lors de la mise à jour des informations du membre.");
         }
     }
