@@ -15,11 +15,33 @@ export async function createMemberDetails(address_id, mail, birthday, contraindi
 
 // ajoute un membre
 export async function createMember(street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, association_id, certificate, subscription, paid) {
+
+    // on traite les blobs s'ils sont pas null
+    if (photo !== null) {
+        const photoBuffer = await photo.arrayBuffer();
+        const photoBytes = new Uint8Array(photoBuffer);
+        photo = Buffer.from(photoBytes)
+        console.log(photoBuffer)
+        console.log(photoBytes)
+        console.log(photo)
+    }
+    if (image_rights_signature !== null) {
+        const image_rights_signatureBuffer = await image_rights_signature.arrayBuffer();
+        const image_rights_signatureBytes = new Uint8Array(image_rights_signatureBuffer);
+        image_rights_signature = Buffer.from(image_rights_signatureBytes)
+        console.log(image_rights_signatureBuffer)
+        console.log(image_rights_signatureBytes)
+        console.log(image_rights_signature)
+    }
+
     // Créer une nouvelle adresse
     const address = await createAddress(street, postal_code, city);
 
     // Créer les détails du membre en utilisant l'ID de l'adresse créée
     const memberDetails = await createMemberDetails(address, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature);
+
+    // Extraire les données binaires de l'objet Blob
+    
 
     // Créer le membre en utilisant les détails du membre créés précédemment
     const [result] = await pool.query(`
@@ -60,7 +82,7 @@ export async function updateMember(member_id, address_id, member_details_id, str
 // retourne tous les membres d'une association en fonction de son id
 export async function getMembers(id) {
     const [rows] = await pool.query('SELECT * FROM members WHERE association_id = ?', [id]);
-    
+
     // Parcourir les lignes et convertir les photos en base64
     const rowsWithBase64Images = rows.map(row => {
         // Si photo existe, la convertir en base64
@@ -70,13 +92,13 @@ export async function getMembers(id) {
                 ...row,
                 photo: base64Image
             };
-        } 
+        }
         // Sinon, renvoyer la ligne sans modification
         else {
             return row;
         }
     });
-    
+
     return rowsWithBase64Images;
 }
 
@@ -106,7 +128,7 @@ export async function getMemberById(member_id, association_id) {
             ...member,
             photo: base64Image
         };
-    } 
+    }
     // Sinon, renvoyer le membre sans modification
     else {
         return member;

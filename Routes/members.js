@@ -1,5 +1,4 @@
 import express from 'express'
-
 import {
     getMembers,
     getMemberById,
@@ -8,6 +7,8 @@ import {
     updateMember,
     getMembersCount
 } from '../Querries/members.js'
+
+import { transformFilesToBlobs } from '../Utils/functions.js'
 
 import { getAddressById } from '../Querries/addresses.js'
 
@@ -61,20 +62,44 @@ router.get("/:member_id", async (req, res) => {
 // POST // 
 
 router.post("/", async (req, res) => {
-    
     if (req.auth.userLvl < 1) {
         return res.status(403).json("Vous n'avez pas les droits d'accès.");
     }
+
     try {
-        console.log(req.body);
-        console.log(req.files)
+
+        // on choppe les données simples
+
+        const dataString = req.body.data
+        const data = JSON.parse(dataString)
+        console.log(data)
+
+        // on choppe les fichiers
+
+        const files = req.files;
+        
+
+        // on les transforme en objet avec 1 blob par fichier ou vide si pas de fichier
+
+        const blobFiles = transformFilesToBlobs(files);
+        
+        // on attribue le blob ou null aux variables photo et image_rights signature
+
+        const photo = blobFiles.photo ? blobFiles.photo[0] : null;
+        const image_rights_signature = blobFiles.image_rights_signature ? blobFiles.image_rights_signature[0] : null;
+
+        
+
+
+        console.log(photo, image_rights_signature)
+        
 
 
 
         // Créer le membre avec toutes les informations
-        /* const member = await createMember(street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, req.auth.associationId, certificate, subscription, paid);
+        const member = await createMember(data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, data.certificate, data.subscription, data.paid);
 
-        res.status(201).json(`Le membre ${firstname} ${lastname} a bien été ajouté à l'association.`); */
+        res.status(201).json(member);
 
     } catch (error) {
         

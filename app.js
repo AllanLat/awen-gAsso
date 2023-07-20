@@ -1,7 +1,6 @@
 import express from 'express'
 import cors from 'cors'
 import auth from './Middleware/auth.js'
-import bodyParser from 'body-parser'
 import multer from 'multer'; // Import multer
 
 import login from './Routes/login.js'
@@ -14,8 +13,7 @@ import users from './Routes/users.js'
 
 const app = express()
 app.use(express.json())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
 
 // pour gérer les erreurs CORS
 app.use(cors());
