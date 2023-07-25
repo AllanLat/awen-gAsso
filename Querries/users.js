@@ -33,6 +33,7 @@ export async function createUser(association_id, firstname, lastname, mail, logi
         INSERT INTO users (association_id, firstname, lastname, mail, login, password, phone_number)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     `, [association_id, firstname, lastname, mail, login, password, phone_number]);
+    return result;
 }
 
 // modifie un user

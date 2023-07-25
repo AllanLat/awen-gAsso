@@ -81,7 +81,7 @@ router.post("/", async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await createUser(req.auth.associationId, firstname, lastname, mail, login, hashedPassword, phone_number);
-        res.status(201).json(`Le user ${firstname} ${lastname} a bien été créé.`);
+        res.status(201).json(user);
     } catch (error) {
         console.log(error)
         res.status(500).json("Une erreur est survenue.");
