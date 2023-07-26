@@ -1,1 +1,0 @@
-/* Controller de la route compta */
