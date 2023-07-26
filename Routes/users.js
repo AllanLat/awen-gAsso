@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, getUser, createUser, getUserByLogin, updateUser, getGroups } from '../Querries/users.js'
+import { getUsers, getUser, createUser, getUserByLogin, updateUser, getGroups, getUsersCount } from '../Querries/users.js'
 import bcrypt from 'bcrypt'
 
 const router = express.Router()
@@ -14,8 +14,18 @@ router.get("/", async (req, res) => {
         const users = await getUsers(req.auth.associationId);
         res.status(200).json(users);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue.");
+    }
+})
+
+router.get("/count", async (req, res) => {
+    try {
+        const users = await getUsersCount(req.auth.associationId);
+        res.status(200).json({ users_count: users });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("Une erreur est survenue lors de la récupération des users.");
     }
 })
 
@@ -31,7 +41,7 @@ router.get("/:user_id", async (req, res) => {
         }
         res.status(200).json(user);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue.");
     }
 })
@@ -52,7 +62,7 @@ router.get("/:user_id/groups", async (req, res) => {
             const groups = await getGroups(user_id);
             res.status(200).json(groups);
         } catch (error) {
-
+            console.log(error)
             res.status(500).json("Une erreur est survenue.");
         }
     }
@@ -71,8 +81,9 @@ router.post("/", async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await createUser(req.auth.associationId, firstname, lastname, mail, login, hashedPassword, phone_number);
-        res.status(201).json(`Le user ${firstname} ${lastname} a bien été créé.`);
+        res.status(201).json(user);
     } catch (error) {
+        console.log(error)
         res.status(500).json("Une erreur est survenue.");
     }
 })
@@ -100,7 +111,7 @@ router.put("/:user_id", async (req, res) => {
         const updated_user = await updateUser(user_id, firstname, lastname, mail, hashedPassword, phone_number);
         res.status(200).json(`Le user ${firstname} ${lastname} a bien été modifié.`);
     } catch (error) {
-
+        console.log(error)
         res.status(500).json("Une erreur est survenue lors de la modification du membre.");
     }
 

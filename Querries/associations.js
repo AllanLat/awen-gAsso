@@ -6,6 +6,13 @@ export async function getAssociations() {
     return rows;
 }
 
+// retourne le logo de l'association
+export async function getLogo(id) {
+    const [rows] = await pool.query('SELECT logo FROM associations WHERE id = ?', [id]);
+    let logo = rows[0].logo.toString('base64');
+    return logo
+}
+
 // retourne une association sous forme d'objet en fonction de son id
 export async function getAssociation(id) {
     const [rows] = await pool.query('SELECT * FROM associations WHERE id = ?', [id]);

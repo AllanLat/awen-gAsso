@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import auth from './Middleware/auth.js'
+import multer from 'multer' // Import multer
 
 import login from './Routes/login.js'
 
@@ -25,10 +26,37 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
 });
+app.use(express.urlencoded({ extended: true }))
 
 // pour gérer les erreurs CORS
 app.use(cors());
 
+// Set up multer to handle FormData
+const upload = multer({
+    // Specify the file fields and their limits
+    // 'photo', 'file', and 'otherFile' should match the names of the file fields in FormData
+    storage: multer.memoryStorage(), // You can use memory storage or configure disk storage as needed
+    limits: {
+        fileSize: 10 * 1024 * 1024, // 10 MB file size limit for each file
+    },
+}).fields([
+    { name: 'photo', maxCount: 1 },
+    { name: 'image_rights_signature', maxCount: 1 },
+]);
+
+// Use multer middleware
+app.use((req, res, next) => {
+    upload(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            // Handle multer errors (e.g., file size exceeded)
+            return res.status(400).json({ error: 'File upload error' });
+        } else if (err) {
+            // Handle other errors
+            return res.status(500).json({ error: 'Something went wrong' });
+        }
+        next();
+    });
+});
 
 // Routes //
 app.post("/api/v1/login", login)
