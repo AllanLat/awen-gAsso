@@ -44,7 +44,7 @@ const upload = multer({
     { name: 'image_rights_signature', maxCount: 1 },
 ]);
 
-// Use multer middleware
+// Use multer middleware 
 app.use((req, res, next) => {
     upload(req, res, (err) => {
         if (err instanceof multer.MulterError) {
