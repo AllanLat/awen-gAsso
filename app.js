@@ -3,6 +3,7 @@ import cors from 'cors'
 import auth from './Middleware/auth.js'
 import multer from 'multer' // Import multer
 
+
 import login from './Routes/login.js'
 
 import associations from './Routes/associations.js'
@@ -18,6 +19,7 @@ import bodyParser from "body-parser"
 const app = express()
 
 app.use(express.json())
+
 app.use(bodyParser.json())
 
 app.use(function (req, res, next) {
@@ -26,6 +28,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
     next();
 });
+
 app.use(express.urlencoded({ extended: true }))
 
 // pour gérer les erreurs CORS
@@ -44,7 +47,9 @@ const upload = multer({
     { name: 'image_rights_signature', maxCount: 1 },
 ]);
 
-// Use multer middleware 
+
+// Use multer middleware
+
 app.use((req, res, next) => {
     upload(req, res, (err) => {
         if (err instanceof multer.MulterError) {
