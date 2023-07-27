@@ -103,7 +103,7 @@ export async function updateGroupPresence(group_id, membersList) {
 export async function createGroup(name, association_id, group_day, members_max, start_time, end_time) {
     const [result] = await pool.query("INSERT INTO `groups` (name, association_id, group_day, members_max, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?)",
         [name, association_id, group_day, members_max, start_time, end_time]);
-    return getGroup(result.insertId);
+    return result
 }
 
 // modifie un groupe

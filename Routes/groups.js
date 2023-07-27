@@ -140,7 +140,7 @@ router.post("/", async (req, res) => {
         const { name, group_day, members_max, start_time, end_time } = req.body;
         const association_id = req.auth.associationId
         const group = await createGroup(name, association_id, group_day, members_max, start_time, end_time);
-        res.json(`Le groupe ${name} a été créé.`);
+        res.status(201).json(group);
     } catch (error) {
         console.log(error)
         res.status(500).json("Une erreur est survenue lors de la création du groupe.");
