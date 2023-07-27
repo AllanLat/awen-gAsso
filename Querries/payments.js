@@ -15,7 +15,6 @@ export async function addPayment(association_id, credit, debit, payment_method, 
 
     const [updateCred] = await pool.query('UPDATE payments SET balance = balance + ? WHERE id = (SELECT MAX(id)) AND description = ? AND association_id = ? AND payment_date = ?' , [credit, description, association_id, payment_date])
     const [updateDeb] = await pool.query('UPDATE payments SET balance = balance - ? WHERE id = (SELECT MAX(id)) AND description = ? AND association_id = ? AND payment_date = ?' , [debit, description, association_id, payment_date])
-    const [link_table] = await pool.query('UPDATE payments SET ')
     return result, updateCred, updateDeb
 }
  
