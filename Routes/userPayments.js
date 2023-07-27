@@ -4,6 +4,6 @@ const router = express.Router()
 import { memberPaymentsView } from '../Controllers/UserPayments.js'
 
 
-router.get("/view", memberPaymentsView)
+router.get("/:member_id", memberPaymentsView)
 
 export default router
