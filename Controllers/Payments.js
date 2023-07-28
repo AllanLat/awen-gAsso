@@ -23,7 +23,7 @@ const addNewPayment = async (req, res) => {
     }
 
     try {
-        const newPayment = await addPayment(req.auth.associationId,
+        await addPayment(req.auth.associationId,
             req.body.credit,
             req.body.debit,
             req.body.payment_method,
@@ -32,9 +32,7 @@ const addNewPayment = async (req, res) => {
             req.body.balance)
             .then(async (response) => {
                 if(req.body.member_id) {
-                    console.log(req.body.member_id)
-                    console.log(response.insertId)
-                    await addPaymentMember(req.body.member_id, response.insertId)
+                    await addPaymentMember(req.body.member_id, response.insertId, parseInt(req.body.credit), parseInt(req.body.debit))   
                 }
             })
             .then(res1 => res.status(201).json(res1))
