@@ -1,4 +1,5 @@
 import { viewAll, addPayment, getBalance } from "../Querries/payments.js"
+import { addPaymentMember } from "../Querries/userPayments.js";
 
 
 const viewAllPayments = async (req, res) => {
@@ -15,10 +16,12 @@ const viewAllPayments = async (req, res) => {
 
 const addNewPayment = async (req, res) => {
 
+    
 
     if (req.auth.userLvl !== 1) {
         return res.status(403).json("Vous n'avez pas les droits d'accès.");
     }
+
     try {
         const newPayment = await addPayment(req.auth.associationId,
             req.body.credit,
@@ -27,16 +30,22 @@ const addNewPayment = async (req, res) => {
             req.body.payment_date,
             req.body.description,
             req.body.balance)
-
+            .then(async (response) => {
+                if(req.body.member_id) {
+                    console.log(req.body.member_id)
+                    console.log(response.insertId)
+                    await addPaymentMember(req.body.member_id, response.insertId)
+                }
+            })
+            .then(res1 => res.status(201).json(res1))
+            .catch(err => console.log(err))
         
-        res.status(201).json(newPayment)
 
-
-
-    } catch (err) {
+   } catch (err) {
         console.log(err)
         res.status(500).json({ error: err });
     }
+
 }
 
 const viewAssociationBalance = async (req, res) => {

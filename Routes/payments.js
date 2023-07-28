@@ -6,7 +6,7 @@ import {viewAllPayments, addNewPayment, viewAssociationBalance} from '../Control
 
 router.get('/views', viewAllPayments)
 router.get('/view/balance', viewAssociationBalance)
-router.post('/', addNewPayment )
+router.post('/', addNewPayment)
  
 
 export default router 

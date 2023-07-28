@@ -1,8 +1,10 @@
-import { viewAllMemberPayments } from "../Querries/userPayments.js";
+
+import { viewAllMemberPayments} from "../Querries/userPayments.js";
+
 
 
 const memberPaymentsView = async (req, res) => {
-    
+
     try{
         const pay = await viewAllMemberPayments(req.params.member_id)
         res.status(200).json(pay)
@@ -11,6 +13,7 @@ const memberPaymentsView = async (req, res) => {
         res.status(500).json(err)
     }
 }
+
 
 export { 
     memberPaymentsView
