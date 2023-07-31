@@ -12,7 +12,7 @@ import members from './Routes/members.js'
 import searchs from './Routes/searchs.js'
 import users from './Routes/users.js'
 import payments from './Routes/payments.js'
-import helmet from "helmet"
+import userPayments from './Routes/userPayments.js'
 import bodyParser from "body-parser"
 
 
@@ -71,6 +71,7 @@ app.use("/api/v1/members", auth, members)
 app.use("/api/v1/searchs", auth, searchs)
 app.use("/api/v1/users", auth, users)
 app.use("/api/v1/paiement", auth, payments)
+app.use("/api/v1/userpayment", auth, userPayments)
 
 // Traitement d’erreurs. Code copié depuis https://expressjs.com/fr/guide/error-handling.html
 app.use(function (err, req, res, next) {
