@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { getUserByLogin } from '../Querries/users.js'
+import { getUserByLogin } from '../Querries/users.mjs'
 
 const login = async (req, res, next) => {
     try {

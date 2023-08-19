@@ -1,5 +1,5 @@
-import { viewAll, addPayment, getBalance } from "../Querries/payments.js"
-import { addPaymentMember } from "../Querries/userPayments.js";
+import { viewAll, addPayment, getBalance } from "../Querries/payments.mjs"
+import { addPaymentMember } from "../Querries/userPayments.mjs";
 
 
 const viewAllPayments = async (req, res) => {

@@ -1,0 +1,208 @@
+App 3915682 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3915682 output: 	return originalRequire.apply(this, arguments);
+App 3915682 output:                         ^
+App 3915682 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3915682 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3915682 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3915682 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3915682 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3915682 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3915682 output:   code: 'ERR_REQUIRE_ESM'
+App 3915682 output: }
+App 3915682 output: Node.js v20.3.1
+App 3915797 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3915797 output: 	return originalRequire.apply(this, arguments);
+App 3915797 output:                         ^
+App 3915797 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3915797 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3915797 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3915797 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3915797 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3915797 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3915797 output:   code: 'ERR_REQUIRE_ESM'
+App 3915797 output: }
+App 3915797 output: Node.js v20.3.1
+App 3916484 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3916484 output: 	return originalRequire.apply(this, arguments);
+App 3916484 output:                         ^
+App 3916484 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3916484 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3916484 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3916484 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3916484 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3916484 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3916484 output:   code: 'ERR_REQUIRE_ESM'
+App 3916484 output: }
+App 3916484 output: Node.js v20.3.1
+App 3916788 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3916788 output: 	return originalRequire.apply(this, arguments);
+App 3916788 output:                         ^
+App 3916788 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3916788 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3916788 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3916788 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3916788 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3916788 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3916788 output:   code: 'ERR_REQUIRE_ESM'
+App 3916788 output: }
+App 3916788 output: Node.js v20.3.1
+App 3916934 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3916934 output: 	return originalRequire.apply(this, arguments);
+App 3916934 output:                         ^
+App 3916934 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3916934 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3916934 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3916934 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3916934 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3916934 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3916934 output:   code: 'ERR_REQUIRE_ESM'
+App 3916934 output: }
+App 3916934 output: Node.js v20.3.1
+App 3924281 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3924281 output: 	return originalRequire.apply(this, arguments);
+App 3924281 output:                         ^
+App 3924281 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3924281 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3924281 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3924281 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3924281 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3924281 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3924281 output:   code: 'ERR_REQUIRE_ESM'
+App 3924281 output: }
+App 3924281 output: Node.js v20.3.1
+App 3955650 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3955650 output: 	return originalRequire.apply(this, arguments);
+App 3955650 output:                         ^
+App 3955650 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3955650 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3955650 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3955650 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3955650 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3955650 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3955650 output:   code: 'ERR_REQUIRE_ESM'
+App 3955650 output: }
+App 3955650 output: Node.js v20.3.1
+App 3957096 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3957096 output: 	return originalRequire.apply(this, arguments);
+App 3957096 output:                         ^
+App 3957096 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3957096 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3957096 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3957096 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3957096 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3957096 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3957096 output:   code: 'ERR_REQUIRE_ESM'
+App 3957096 output: }
+App 3957096 output: Node.js v20.3.1
+App 176056 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 176056 output: 	return originalRequire.apply(this, arguments);
+App 176056 output:                         ^
+App 176056 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 176056 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 176056 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 176056 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 176056 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 176056 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 176056 output:   code: 'ERR_REQUIRE_ESM'
+App 176056 output: }
+App 176056 output: Node.js v20.3.1
+App 3544309 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 3544309 output: 	return originalRequire.apply(this, arguments);
+App 3544309 output:                         ^
+App 3544309 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/laal3217/api_g_asso/app.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 3544309 output: Instead change the require of app.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 3544309 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 3544309 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 3544309 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 3544309 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 3544309 output:   code: 'ERR_REQUIRE_ESM'
+App 3544309 output: }
+App 3544309 output: Node.js v20.3.1
+App 3568929 output: node:internal/process/promises:289
+App 3568929 output:             triggerUncaughtException(err, true /* fromPromise */);
+App 3568929 output:             ^
+App 3568929 output: Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'express' imported from /home/laal3217/api_g_asso/app.js
+App 3568929 output: Did you mean to import express/index.js?
+App 3568929 output:     at new NodeError (node:internal/errors:405:5)
+App 3568929 output:     at packageResolve (node:internal/modules/esm/resolve:781:9)
+App 3568929 output:     at moduleResolve (node:internal/modules/esm/resolve:830:20)
+App 3568929 output:     at defaultResolve (node:internal/modules/esm/resolve:1035:11)
+App 3568929 output:     at DefaultModuleLoader.resolve (node:internal/modules/esm/loader:269:12)
+App 3568929 output:     at DefaultModuleLoader.getModuleJob (node:internal/modules/esm/loader:153:32)
+App 3568929 output:     at DefaultModuleLoader.import (node:internal/modules/esm/loader:245:28)
+App 3568929 output:     at importModuleDynamically (node:internal/modules/cjs/loader:1187:37)
+App 3568929 output:     at importModuleDynamicallyWrapper (node:internal/vm/module:428:21)
+App 3568929 output:     at importModuleDynamically (node:internal/vm:105:46) {
+App 3568929 output:   code: 'ERR_MODULE_NOT_FOUND'
+App 3568929 output: }
+App 3568929 output: Node.js v20.3.1
+App 3569360 output: node:internal/process/promises:289
+App 3569360 output:             triggerUncaughtException(err, true /* fromPromise */);
+App 3569360 output:             ^
+App 3569360 output: Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'express' imported from /home/laal3217/api_g_asso/app.js
+App 3569360 output: Did you mean to import express/index.js?
+App 3569360 output:     at new NodeError (node:internal/errors:405:5)
+App 3569360 output:     at packageResolve (node:internal/modules/esm/resolve:781:9)
+App 3569360 output:     at moduleResolve (node:internal/modules/esm/resolve:830:20)
+App 3569360 output:     at defaultResolve (node:internal/modules/esm/resolve:1035:11)
+App 3569360 output:     at DefaultModuleLoader.resolve (node:internal/modules/esm/loader:269:12)
+App 3569360 output:     at DefaultModuleLoader.getModuleJob (node:internal/modules/esm/loader:153:32)
+App 3569360 output:     at DefaultModuleLoader.import (node:internal/modules/esm/loader:245:28)
+App 3569360 output:     at importModuleDynamically (node:internal/modules/cjs/loader:1187:37)
+App 3569360 output:     at importModuleDynamicallyWrapper (node:internal/vm/module:428:21)
+App 3569360 output:     at importModuleDynamically (node:internal/vm:105:46) {
+App 3569360 output:   code: 'ERR_MODULE_NOT_FOUND'
+App 3569360 output: }
+App 3569360 output: Node.js v20.3.1
+App 3582001 output: node:internal/process/promises:289
+App 3582001 output:             triggerUncaughtException(err, true /* fromPromise */);
+App 3582001 output:             ^
+App 3582001 output: Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'express' imported from /home/laal3217/api_g_asso/app.js
+App 3582001 output: Did you mean to import express/index.js?
+App 3582001 output:     at new NodeError (node:internal/errors:405:5)
+App 3582001 output:     at packageResolve (node:internal/modules/esm/resolve:781:9)
+App 3582001 output:     at moduleResolve (node:internal/modules/esm/resolve:830:20)
+App 3582001 output:     at defaultResolve (node:internal/modules/esm/resolve:1035:11)
+App 3582001 output:     at DefaultModuleLoader.resolve (node:internal/modules/esm/loader:269:12)
+App 3582001 output:     at DefaultModuleLoader.getModuleJob (node:internal/modules/esm/loader:153:32)
+App 3582001 output:     at DefaultModuleLoader.import (node:internal/modules/esm/loader:245:28)
+App 3582001 output:     at importModuleDynamically (node:internal/modules/cjs/loader:1187:37)
+App 3582001 output:     at importModuleDynamicallyWrapper (node:internal/vm/module:428:21)
+App 3582001 output:     at importModuleDynamically (node:internal/vm:105:46) {
+App 3582001 output:   code: 'ERR_MODULE_NOT_FOUND'
+App 3582001 output: }
+App 3582001 output: Node.js v20.3.1
+App 3590110 output: node:internal/errors:496
+App 3590110 output:     ErrorCaptureStackTrace(err);
+App 3590110 output:     ^
+App 3590110 output: Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/laal3217/api_g_asso/Routes/userPayments.mjs/index.js' imported from /home/laal3217/api_g_asso/app.js
+App 3590110 output:     at new NodeError (node:internal/errors:405:5)
+App 3590110 output:     at finalizeResolution (node:internal/modules/esm/resolve:224:11)
+App 3590110 output:     at moduleResolve (node:internal/modules/esm/resolve:837:10)
+App 3590110 output:     at defaultResolve (node:internal/modules/esm/resolve:1035:11)
+App 3590110 output:     at DefaultModuleLoader.resolve (node:internal/modules/esm/loader:269:12)
+App 3590110 output:     at DefaultModuleLoader.getModuleJob (node:internal/modules/esm/loader:153:32)
+App 3590110 output:     at DefaultModuleLoader.import (node:internal/modules/esm/loader:245:28)
+App 3590110 output:     at importModuleDynamically (node:internal/modules/cjs/loader:1187:37)
+App 3590110 output:     at importModuleDynamicallyWrapper (node:internal/vm/module:428:21)
+App 3590110 output:     at importModuleDynamically (node:internal/vm:105:46) {
+App 3590110 output:   code: 'ERR_MODULE_NOT_FOUND'
+App 3590110 output: }
+App 3590110 output: Node.js v20.3.1
+App 3590692 output: node:internal/errors:496
+App 3590692 output:     ErrorCaptureStackTrace(err);
+App 3590692 output:     ^
+App 3590692 output: Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/laal3217/api_g_asso/Routes/userPayments.mjs/index.js' imported from /home/laal3217/api_g_asso/app.js
+App 3590692 output:     at new NodeError (node:internal/errors:405:5)
+App 3590692 output:     at finalizeResolution (node:internal/modules/esm/resolve:224:11)
+App 3590692 output:     at moduleResolve (node:internal/modules/esm/resolve:837:10)
+App 3590692 output:     at defaultResolve (node:internal/modules/esm/resolve:1035:11)
+App 3590692 output:     at DefaultModuleLoader.resolve (node:internal/modules/esm/loader:269:12)
+App 3590692 output:     at DefaultModuleLoader.getModuleJob (node:internal/modules/esm/loader:153:32)
+App 3590692 output:     at DefaultModuleLoader.import (node:internal/modules/esm/loader:245:28)
+App 3590692 output:     at importModuleDynamically (node:internal/modules/cjs/loader:1187:37)
+App 3590692 output:     at importModuleDynamicallyWrapper (node:internal/vm/module:428:21)
+App 3590692 output:     at importModuleDynamically (node:internal/vm:105:46) {
+App 3590692 output:   code: 'ERR_MODULE_NOT_FOUND'
+App 3590692 output: }
+App 3590692 output: Node.js v20.3.1

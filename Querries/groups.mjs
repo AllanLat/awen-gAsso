@@ -1,4 +1,4 @@
-import pool from '../Utils/pool.js';
+import pool from '../Utils/pool.mjs';
 
 // retourne tous les groupes d'un jour (ou 0 = lundi, 1 = mardi, ...) en fonction de son id
 export async function getDayGroups(association_id, day) {

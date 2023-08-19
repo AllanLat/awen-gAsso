@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, getUser, createUser, getUserByLogin, updateUser, getGroups, getUsersCount } from '../Querries/users.js'
+import { getUsers, getUser, createUser, getUserByLogin, updateUser, getGroups, getUsersCount } from '../Querries/users.mjs'
 import bcrypt from 'bcrypt'
 
 const router = express.Router()

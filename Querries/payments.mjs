@@ -1,4 +1,4 @@
-import pool from '../Utils/pool.js'
+import pool from '../Utils/pool.mjs'
 
 //retourne tous les paiements d'une association
 export async function viewAll(associationId) {

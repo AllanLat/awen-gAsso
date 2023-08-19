@@ -1,4 +1,4 @@
-import pool from '../Utils/pool.js';
+import pool from '../Utils/pool.mjs';
 
 // ajoute une adresse 
 export async function createAddress(street, postal_code, city) {

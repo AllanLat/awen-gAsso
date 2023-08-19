@@ -6,11 +6,11 @@ import {
     createMember,
     updateMember,
     getMembersCount
-} from '../Querries/members.js'
+} from '../Querries/members.mjs'
 
-import { transformFilesToBlobs } from '../Utils/functions.js'
+import { transformFilesToBlobs } from '../Utils/functions.mjs'
 
-import { getAddressById } from '../Querries/addresses.js'
+import { getAddressById } from '../Querries/addresses.mjs'
 
 const router = express.Router()
 

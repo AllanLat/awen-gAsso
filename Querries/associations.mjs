@@ -1,4 +1,4 @@
-import pool from '../Utils/pool.js';
+import pool from '../Utils/pool.mjs';
 
 // retourne toutes les associations sous forme d'objets dans un tabeau
 export async function getAssociations() {

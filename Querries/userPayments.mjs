@@ -1,4 +1,4 @@
-import pool from "../Utils/pool.js"
+import pool from "../Utils/pool.mjs"
 
 export async function viewAllMemberPayments(member_id) {
 

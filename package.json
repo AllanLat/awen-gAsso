@@ -13,8 +13,7 @@
   "name": "awen-gasso",
   "description": "REST API for G_ASSO App",
   "version": "1.0.0",
-  "type": "module",
-  "main": "database.js",
+  "main": "app.mjs",
   "scripts": {
     "start": "npx nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

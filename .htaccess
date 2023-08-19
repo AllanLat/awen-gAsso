@@ -1,0 +1,2 @@
+PassengerAppEnv development
+PassengerFriendlyErrorPages on

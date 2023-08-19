@@ -14,10 +14,10 @@ import {
     deleteUserFromGroup,
     deleteGroup,
     getDayGroupsCount
-} from '../Querries/groups.js'
+} from '../Querries/groups.mjs'
 
-import { getMemberById } from '../Querries/members.js'
-import { getUser } from '../Querries/users.js'
+import { getMemberById } from '../Querries/members.mjs'
+import { getUser } from '../Querries/users.mjs'
 
 const router = express.Router()
 

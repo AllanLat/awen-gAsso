@@ -1,5 +1,5 @@
 
-import { viewAllMemberPayments} from "../Querries/userPayments.js";
+import { viewAllMemberPayments} from "../Querries/userPayments.mjs";
 
 
 

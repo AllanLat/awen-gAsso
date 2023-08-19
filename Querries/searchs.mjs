@@ -1,4 +1,4 @@
-import pool from '../Utils/pool.js';
+import pool from '../Utils/pool.mjs';
 
 // retourne le résultat d'une recherche de membres d'une association en fonction d'une partie de son nom
 export async function getMembersByLastname(lastname, association_id) {

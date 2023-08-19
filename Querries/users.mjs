@@ -1,4 +1,4 @@
-import pool from '../Utils/pool.js';
+import pool from '../Utils/pool.mjs';
 
 /* const association_id = 7 */
 

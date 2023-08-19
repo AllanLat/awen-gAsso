@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 
-import {viewAllPayments, addNewPayment, viewAssociationBalance} from '../Controllers/Payments.js'
+import {viewAllPayments, addNewPayment, viewAssociationBalance} from '../Controllers/Payments.mjs'
 
 
 router.get('/views', viewAllPayments)

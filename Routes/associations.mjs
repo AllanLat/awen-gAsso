@@ -1,5 +1,5 @@
 import express from 'express'
-import auth from '../Middleware/auth.js'
+import auth from '../Middleware/auth.mjs'
 import {
     getAssociations,
     getAssociation,
@@ -7,7 +7,7 @@ import {
     updateAssociation,
     deleteAssociation,
     getLogo
-} from '../Querries/associations.js'
+} from '../Querries/associations.mjs'
 
 const router = express.Router()
 
