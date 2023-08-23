@@ -28,7 +28,7 @@ const login = async (req, res, next) => {
         next()
     } 
     catch (error) {
-        res.status(500).json({ error: "Une erreur est survenue." });
+        res.status(504).send(error);
     }
 }
 

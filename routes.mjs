@@ -12,11 +12,20 @@ import searchs from './Routes/searchs.mjs';
 import users from './Routes/users.mjs';
 import payments from './Routes/payments.mjs';
 import userPayments from './Routes/userPayments.mjs';
+import bcrypt from 'bcrypt';
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+
+const corsOptions = {
+    origin: 'http://g-asso.com', // Mettez l'origine de votre site Web ici
+    methods: 'GET,POST,PUT,DELETE', // Les méthodes HTTP autorisées
+    allowedHeaders: 'Content-Type,Authorization', // Les en-têtes autorisés
+  };
+  
+  // Utiliser le middleware CORS
+  app.use(cors());
 
 // Set up multer to handle FormData
 const upload = multer({
@@ -47,8 +56,12 @@ app.use((req, res, next) => {
     });
 });
 
-app.get("/api/v1", (req, res) => {
-  res.status(200).json({ message: "Welcome to the API" });
+app.get("/api/v1", async (req, res) => {
+    const password = "Admin"
+    const hashedPassword = await bcrypt.hash(password, 10);
+    res.json({
+        password: hashedPassword
+    })
 });
 
 app.post("/api/v1/login", login);
