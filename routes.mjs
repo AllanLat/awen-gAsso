@@ -56,8 +56,8 @@ app.use((req, res, next) => {
     });
 });
 
-app.get("/api/v1", async (req, res) => {
-    const password = "Admin"
+app.get("/api/v1/mp", async (req, res) => {
+    const password = "Karine22200"
     const hashedPassword = await bcrypt.hash(password, 10);
     res.json({
         password: hashedPassword
