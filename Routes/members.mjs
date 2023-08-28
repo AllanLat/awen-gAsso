@@ -55,10 +55,6 @@ router.get("/:member_id", async (req, res) => {
 });
 
 
-
-
-
-
 // POST // 
 
 router.post("/", async (req, res) => {
@@ -86,9 +82,10 @@ router.post("/", async (req, res) => {
 
         const photo = blobFiles.photo ? blobFiles.photo[0] : null;
         const image_rights_signature = blobFiles.image_rights_signature ? blobFiles.image_rights_signature[0] : null;
+        const certificate = blobFiles.certificate ? blobFiles.certificate[0] : null;
 
         // Créer le membre avec toutes les informations
-        const member = await createMember(data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, data.certificate, data.subscription, data.paid);
+        const member = await createMember(data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, certificate, data.subscription, data.paid);
 
         res.status(201).json(member);
 
@@ -123,7 +120,7 @@ router.put("/:member_id", async (req, res) => {
 
     const photo = blobFiles.photo ? blobFiles.photo[0] : null;
     const image_rights_signature = blobFiles.image_rights_signature ? blobFiles.image_rights_signature[0] : null;
-    const certificate = blobFiles.certificate ? blobFiles.certificate[0] : null;
+    const certificate_medical = blobFiles.certificate_medical ? blobFiles.certificate_medical[0] : null;
 
     const member = await getMemberById(req.params.member_id, req.auth.associationId);
 
@@ -136,7 +133,7 @@ router.put("/:member_id", async (req, res) => {
         const member_details = await getMemberDetailsById(member_details_id);
         const address_id = member_details.address_id;
         try {
-            const updatedMember = updateMember(member.id, address_id, member_details_id, data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, data.certificate, data.subscription, data.paid)
+            const updatedMember = updateMember(member.id, address_id, member_details_id, data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, data.certificate, data.subscription, data.paid, data.certificate_medical)
 
             res.status(200).json(updatedMember);
 

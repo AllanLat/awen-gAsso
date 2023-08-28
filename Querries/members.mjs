@@ -28,6 +28,11 @@ export async function createMember(street, postal_code, city, mail, birthday, co
         const image_rights_signatureBytes = new Uint8Array(image_rights_signatureBuffer);
         image_rights_signature = Buffer.from(image_rights_signatureBytes)
     }
+    if (certificate !== null) {
+        const certificateBuffer = await signature.arrayBuffer();
+        const certificateBytes = new Uint8Array(certificateBuffer);
+        certificate = Buffer.from(certificateBytes)
+    }
 
     // Créer une nouvelle adresse
     const address = await createAddress(street, postal_code, city);
@@ -75,9 +80,15 @@ export async function updateMember(member_id, address_id, member_details_id, str
         photo = Buffer.from(photoBytes)
     }
     if (image_rights_signature !== null) {
+        // Devien le certificate medicale
         const image_rights_signatureBuffer = await image_rights_signature.arrayBuffer();
         const image_rights_signatureBytes = new Uint8Array(image_rights_signatureBuffer);
         image_rights_signature = Buffer.from(image_rights_signatureBytes)
+    }
+    if (certificate !== null) {
+        const certificateBuffer = await signature.arrayBuffer();
+        const certificateBytes = new Uint8Array(certificateBuffer);
+        certificate = Buffer.from(certificateBytes)
     }
     // Modifier l'adresse existante
     await updateAddress(address_id, street, postal_code, city);
@@ -113,10 +124,23 @@ export async function getMembers(id) {
         // Si photo existe, la convertir en base64
         if (row.photo) {
             let base64Image = row.photo.toString('base64');
-            return {
+
+            if (row.certificate) {
+                base64ImageCertificate = row.certificate.toString('base64');
+
+                return {
+                    ...row,
+                    photo: base64Image,
+                    certificate: base64ImageCertificate
+                }
+            }
+            else {
+                 return {
                 ...row,
                 photo: base64Image
             };
+            }
+           
         }
         // Sinon, renvoyer la ligne sans modification
         else {
@@ -146,15 +170,27 @@ export async function getMemberById(member_id, association_id) {
     // Sinon, obtenir le premier membre
     let member = rows[0];
 
-    // Si une photo existe, la convertir en base64
     if (member.photo) {
         let base64Image = member.photo.toString('base64');
-        return {
+
+        if (member.certificate) {
+            base64ImageCertificate = member.certificate.toString('base64');
+
+            return {
+                ...member,
+                photo: base64Image,
+                certificate: base64ImageCertificate
+            }
+        }
+        else {
+             return {
             ...member,
             photo: base64Image
         };
+        }
+       
     }
-    // Sinon, renvoyer le membre sans modification
+    // Sinon, renvoyer la ligne sans modification
     else {
         return member;
     }
