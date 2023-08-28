@@ -123,6 +123,7 @@ router.put("/:member_id", async (req, res) => {
 
     const photo = blobFiles.photo ? blobFiles.photo[0] : null;
     const image_rights_signature = blobFiles.image_rights_signature ? blobFiles.image_rights_signature[0] : null;
+    const certificate = blobFiles.certificate ? blobFiles.certificate[0] : null;
 
     const member = await getMemberById(req.params.member_id, req.auth.associationId);
 

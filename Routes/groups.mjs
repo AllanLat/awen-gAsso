@@ -3,6 +3,7 @@ import express from 'express'
 import {
     getDayGroups,
     getGroup,
+    getGroups,
     getGroupMembers,
     updateGroupPresence,
     createGroup,
@@ -78,6 +79,19 @@ router.get("/:group_id", async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json("Une erreur est survenue lors de la récupération du groupe.");
+    }
+})
+
+router.get("/", async (req, res) => {
+    try {
+        const group = await getGroups(req.auth.associationId);
+        if (!group) {
+            return res.status(404).json("Aucun groupes trouver.");
+        }
+        res.json(group);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("Une erreur est survenue lors de la récupération des groupes.");
     }
 })
 

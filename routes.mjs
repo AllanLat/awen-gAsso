@@ -38,6 +38,7 @@ const upload = multer({
 }).fields([
     { name: 'photo', maxCount: 1 },
     { name: 'image_rights_signature', maxCount: 1 },
+    { name: 'certificate', maxCount: 1},
 ]);
 
 

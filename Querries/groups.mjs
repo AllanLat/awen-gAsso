@@ -18,6 +18,12 @@ export async function getGroup(group_id, association_id) {
     return rows[0];
 }
 
+// Retourne tous les groupes
+export async function getGroups(association_id) {
+    const [rows] = await pool.query('SELECT * FROM `groups` WHERE association_id = ?' , [association_id]);
+    return rows;
+}
+
 // Retourne tous les membres d'un groupe en fonction de son ID
 export async function getGroupMembers(group_id) {
     const [rows] = await pool.query(
