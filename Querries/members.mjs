@@ -126,7 +126,7 @@ export async function getMembers(id) {
             let base64Image = row.photo.toString('base64');
 
             if (row.certificate) {
-                base64ImageCertificate = row.certificate.toString('base64');
+                let base64ImageCertificate = row.certificate.toString('base64');
 
                 return {
                     ...row,
@@ -200,5 +200,18 @@ export async function getMemberById(member_id, association_id) {
 // retourne les détails d'un membre en fonction de son id
 export async function getMemberDetailsById(id) {
     const [rows] = await pool.query('SELECT * FROM member_details WHERE id = ?', [id]);
-    return rows[0];
+
+    let member_detail = rows[0];
+    if (member_detail.image_rights_signature) {
+        let base64ImageImageRightsSignature = member_detail.image_rights_signature.toString('base64');
+
+        return {
+            ...member_detail,
+            image_rights_signature: base64ImageImageRightsSignature
+        }
+    }
+    else {
+        return member_detail;
+    };
+
 }
