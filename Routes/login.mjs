@@ -20,7 +20,7 @@ const login = async (req, res, next) => {
             userLvl: user.is_admin,
             token: jwt.sign(
                 { userId: user.id, associationId: user.association_id, userLvl: user.is_admin },
-                'G_ASSO_RANDOM_FJDSKFJHSDKFJDHSBF',
+                process.env.CRYPT,
                 { expiresIn: '24h' }
             )
         })
