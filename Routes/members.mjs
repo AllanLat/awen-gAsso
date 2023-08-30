@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
         // on choppe les fichiers
 
         const files = req.files;
-        console.log(files);
+        //console.log(files);
 
         // on les transforme en objet avec 1 blob par fichier ou vide si pas de fichier
 

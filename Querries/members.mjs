@@ -29,7 +29,7 @@ export async function createMember(street, postal_code, city, mail, birthday, co
         image_rights_signature = Buffer.from(image_rights_signatureBytes)
     }
     if (certificate !== null) {
-        const certificateBuffer = await signature.arrayBuffer();
+        const certificateBuffer = await certificate.arrayBuffer();
         const certificateBytes = new Uint8Array(certificateBuffer);
         certificate = Buffer.from(certificateBytes)
     }
@@ -174,7 +174,7 @@ export async function getMemberById(member_id, association_id) {
         let base64Image = member.photo.toString('base64');
 
         if (member.certificate) {
-            base64ImageCertificate = member.certificate.toString('base64');
+            let base64ImageCertificate = member.certificate.toString('base64');
 
             return {
                 ...member,
