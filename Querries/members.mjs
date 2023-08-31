@@ -1,6 +1,8 @@
 import e from 'express';
 import pool from '../Utils/pool.mjs';
 import { createAddress, updateAddress } from './addresses.mjs';
+import fs from 'fs';
+import PDFDocument from 'pdfkit';
 
 
 
@@ -74,19 +76,20 @@ export async function updateMemberDetails(detailsId, addressId, mail, birthday, 
 // Modifie un membre existant
 export async function updateMember(member_id, address_id, member_details_id, street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, association_id, certificate, subscription, paid) {
     // on traite les blobs s'ils sont pas null
-    if (photo !== null) {
-        const photoBuffer = await photo.arrayBuffer();
-        const photoBytes = new Uint8Array(photoBuffer);
-        photo = Buffer.from(photoBytes)
+   // on traite les blobs s'ils sont pas null
+   if (photo !== null) {
+    const photoBuffer = await photo.arrayBuffer();
+    const photoBytes = new Uint8Array(photoBuffer);
+    photo = Buffer.from(photoBytes)
     }
     if (image_rights_signature !== null) {
-        // Devien le certificate medicale
         const image_rights_signatureBuffer = await image_rights_signature.arrayBuffer();
         const image_rights_signatureBytes = new Uint8Array(image_rights_signatureBuffer);
         image_rights_signature = Buffer.from(image_rights_signatureBytes)
     }
-    if (certificate !== null) {
-        const certificateBuffer = await signature.arrayBuffer();
+    console.log(certificate);
+    if (certificate !== null && certificate !== undefined){
+        const certificateBuffer = await certificate.arrayBuffer();
         const certificateBytes = new Uint8Array(certificateBuffer);
         certificate = Buffer.from(certificateBytes)
     }
@@ -199,19 +202,23 @@ export async function getMemberById(member_id, association_id) {
 
 // retourne les détails d'un membre en fonction de son id
 export async function getMemberDetailsById(id) {
-    const [rows] = await pool.query('SELECT * FROM member_details WHERE id = ?', [id]);
+  
+        const [rows] = await pool.query('SELECT * FROM member_details WHERE id = ?', [id]);
+    
+        const member_details = rows[0];
 
-    let member_detail = rows[0];
-    if (member_detail.image_rights_signature) {
-        let base64ImageImageRightsSignature = member_detail.image_rights_signature.toString('base64');
-
-        return {
-            ...member_detail,
-            image_rights_signature: base64ImageImageRightsSignature
+        if (member_details.image_rights_signature) {
+            let base64Image = member_details.image_rights_signature.toString('base64');
+    
+         
+                 return {
+                ...member_details,
+                image_rights_signature: base64Image
+            }
         }
+            else {
+                return member_details
+            }
+           
+        
     }
-    else {
-        return member_detail;
-    };
-
-}
