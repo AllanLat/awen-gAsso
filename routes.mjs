@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Mettez l'origine de votre site Web ici
+    origin: 'https://localhost:3000', // Mettez l'origine de votre site Web ici
     methods: 'GET,POST,PUT,DELETE', // Les méthodes HTTP autorisées
     allowedHeaders: 'Content-Type,Authorization', // Les en-têtes autorisés
   };
