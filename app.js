@@ -16,6 +16,6 @@ dynamicImports().then(routes => {
   if (typeof PhusionPassenger !== 'undefined') {
     app.listen('passenger');
   } else {
-    app.listen(3000);
+    app.listen(8000);
   }
 });

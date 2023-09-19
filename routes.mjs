@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-    origin: 'http://g-asso.com', // Mettez l'origine de votre site Web ici
+    origin: 'https://localhost:3000', // Mettez l'origine de votre site Web ici
     methods: 'GET,POST,PUT,DELETE', // Les méthodes HTTP autorisées
     allowedHeaders: 'Content-Type,Authorization', // Les en-têtes autorisés
   };
@@ -57,13 +57,13 @@ app.use((req, res, next) => {
     });
 });
 
-app.get("/api/v1/mp", async (req, res) => {
-    const password = "Karine2200";
-    const hashedPassword = await bcrypt.hash(password, 10);
-    res.json({
-        password: hashedPassword
-    })
-});
+// app.get("/api/v1/mp", async (req, res) => {
+//     const password = "Karine2200";
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     res.json({
+//         password: hashedPassword
+//     })
+// });
 
 app.post("/api/v1/login", login);
 app.use('/api/v1/associations', auth, associations);
