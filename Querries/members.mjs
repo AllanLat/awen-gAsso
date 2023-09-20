@@ -7,17 +7,17 @@ import PDFDocument from 'pdfkit';
 
 
 // ajoute les détails d'un membre 
-export async function createMemberDetails(address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature) {
+export async function createMemberDetails(address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib) {
     const [result] = await pool.query(`
-        INSERT INTO member_details (address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO member_details (address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
-        [address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature]);
+        [address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib]);
     return result.insertId;
 }
 
 // ajoute un membre
-export async function createMember(street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, association_id, certificate, subscription, paid) {
+export async function createMember(street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, association_id, certificate, subscription, paid, rib) {
 
     // on traite les blobs s'ils sont pas null
     if (photo !== null) {
@@ -36,11 +36,17 @@ export async function createMember(street, postal_code, city, mail, birthday, co
         certificate = Buffer.from(certificateBytes)
     }
 
+    if (rib !== null){
+        const ribBuffer = await rib.arrayBuffer();
+        const ribBytes = new Uint8Array(ribBuffer)
+        rib = Buffer.from(ribBytes)
+    }
+
     // Créer une nouvelle adresse
     const address = await createAddress(street, postal_code, city);
 
     // Créer les détails du membre en utilisant l'ID de l'adresse créée
-    const memberDetails = await createMemberDetails(address, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature);
+    const memberDetails = await createMemberDetails(address, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib);
 
     // Extraire les données binaires de l'objet Blob
 

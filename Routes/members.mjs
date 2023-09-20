@@ -83,9 +83,10 @@ router.post("/", async (req, res) => {
         const photo = blobFiles.photo ? blobFiles.photo[0] : null;
         const image_rights_signature = blobFiles.image_rights_signature ? blobFiles.image_rights_signature[0] : null;
         const certificate = blobFiles.certificate ? blobFiles.certificate[0] : null;
+        const rib = blobFiles.rib ? blobFiles.rib[0] : null;
 
         // Créer le membre avec toutes les informations
-        const member = await createMember(data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, certificate, data.subscription, data.paid);
+        const member = await createMember(data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, certificate, data.subscription, data.paid, rib);
 
         res.status(201).json(member);
 
