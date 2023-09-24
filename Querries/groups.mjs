@@ -64,6 +64,7 @@ export async function deleteMemberFromGroup(group_id, member_id) {
         'DELETE FROM members_groups WHERE group_id = ? AND member_id = ?',
         [group_id, member_id]
     );
+    return result
 }
 
 // supprime un user d'un groupe en fonction de son ID
