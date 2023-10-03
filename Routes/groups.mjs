@@ -14,7 +14,8 @@ import {
     deleteMemberFromGroup,
     deleteUserFromGroup,
     deleteGroup,
-    getDayGroupsCount
+    getDayGroupsCount,
+    addPresenceList
 } from '../Querries/groups.mjs'
 
 import { getMemberById } from '../Querries/members.mjs'
@@ -244,6 +245,21 @@ router.post("/:group_id/users", async (req, res) => {
     }
 })
 
+router.post("/presence", async (req, res) => {
+    // if (req.auth.userLvl < 1) {
+    //     return res.status(403).json("Vous n'avez pas les droits d'accès.");
+    // }
+    
+    try{
+        
+        addPresenceList(req.body.associationId, req.body.group_id, req.body.presence, req.body.userId)
+    }catch(err){
+        console.log(err)
+        res.status(500).json({error : "Une erreur est survenue lors de l'ajout de la fiche presence."});
+    }
+
+})
+
 // PUT //
 
 router.put("/:group_id", async (req, res) => {
@@ -272,7 +288,7 @@ router.put("/:group_id/presence", async (req, res) => {
             return res.status(404).json("Le groupe n'existe pas.");
         }
 
-        const members_list = req.body.members_list;
+        const members_list = req.body;
         const group_members = await getGroupMembers(group.id);
 
         for (const memberId of members_list) {

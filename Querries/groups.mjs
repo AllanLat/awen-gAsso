@@ -64,6 +64,7 @@ export async function deleteMemberFromGroup(group_id, member_id) {
         'DELETE FROM members_groups WHERE group_id = ? AND member_id = ?',
         [group_id, member_id]
     );
+    return result
 }
 
 // supprime un user d'un groupe en fonction de son ID
@@ -103,6 +104,17 @@ export async function updateGroupPresence(group_id, membersList) {
         'UPDATE members_groups SET presence_count = presence_count + 1 WHERE group_id = ? AND member_id IN (?)',
         [group_id, membersList]
     );
+    return result;
+}
+
+//ajoute une liste de présence
+export async function addPresenceList(association_id, group_id, presence, user_id){
+    
+    const result = await pool.query(
+        'INSERT INTO presences (association_id, group_id, presences, user_id) VALUES (?, ?, ?, ?)',
+        [association_id, group_id, presence, user_id]
+    );
+    return result;
 }
 
 // ajoute un groupe 
