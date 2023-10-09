@@ -143,7 +143,7 @@ export async function updateMember(member_id, address_id, member_details_id, str
 
 // retourne tous les membres d'une association en fonction de son id
 export async function getMembers(id) {
-    const [rows] = await pool.query('SELECT * FROM members WHERE association_id = ?', [id]);
+    const [rows] = await pool.query('SELECT * FROM members WHERE association_id = ? AND hide_statut = 0', [id]);
 
     // Parcourir les lignes et convertir les photos en base64
     const rowsWithBase64Images = rows.map(row => {
@@ -179,14 +179,14 @@ export async function getMembers(id) {
 
 //retourne le nombre de membre d'une association en fonction de son id
 export async function getMembersCount(id) {
-    const count = await pool.query('SELECT COUNT(*) FROM members WHERE association_id = ? AND hide_status = 0', [id]);
+    const count = await pool.query('SELECT COUNT(*) FROM members WHERE association_id = ? AND hide_statut = 0', [id]);
     const members_count = count[0][0]["COUNT(*)"];
     return members_count;
 }
 
 // retourne le membre en fonction de son id et de son association
 export async function getMemberById(member_id, association_id) {
-    const [rows] = await pool.query('SELECT * FROM members WHERE id = ? AND association_id = ? AND hide_status = 0', [member_id, association_id]);
+    const [rows] = await pool.query('SELECT * FROM members WHERE id = ? AND association_id = ? AND hide_statut = 0', [member_id, association_id]);
 
     // Si aucun membre n'est trouvé, renvoyer null ou undefined
     if (rows.length === 0) {

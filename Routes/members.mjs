@@ -85,8 +85,10 @@ router.post("/", async (req, res) => {
         const certificate = blobFiles.certificate ? blobFiles.certificate[0] : null;
         const rib = blobFiles.rib ? blobFiles.rib[0] : null;
 
+        data.information = "toto le zigoto";
+
         // Créer le membre avec toutes les informations
-        const member = await createMember(data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, certificate, data.subscription, data.paid, rib);
+        const member = await createMember(data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, certificate, data.subscription, data.paid, rib, data.information);
 
         res.status(201).json(member);
 
