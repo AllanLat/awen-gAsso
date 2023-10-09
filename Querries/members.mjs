@@ -7,17 +7,17 @@ import PDFDocument from 'pdfkit';
 
 
 // ajoute les détails d'un membre 
-export async function createMemberDetails(address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib) {
+export async function createMemberDetails(address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib, information) {
     const [result] = await pool.query(`
-        INSERT INTO member_details (address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO member_details (address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib, information)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
-        [address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib]);
+        [address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib, information]);
     return result.insertId;
 }
 
 // ajoute un membre
-export async function createMember(street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, association_id, certificate, subscription, paid, rib) {
+export async function createMember(street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, association_id, certificate, subscription, paid, rib, information) {
 
     // on traite les blobs s'ils sont pas null
     if (photo !== null) {
@@ -46,10 +46,7 @@ export async function createMember(street, postal_code, city, mail, birthday, co
     const address = await createAddress(street, postal_code, city);
 
     // Créer les détails du membre en utilisant l'ID de l'adresse créée
-    const memberDetails = await createMemberDetails(address, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib);
-
-    // Extraire les données binaires de l'objet Blob
-
+    const memberDetails = await createMemberDetails(address, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib, information);
 
     // Créer le membre en utilisant les détails du membre créés précédemment
     const [result] = await pool.query(`
@@ -182,14 +179,14 @@ export async function getMembers(id) {
 
 //retourne le nombre de membre d'une association en fonction de son id
 export async function getMembersCount(id) {
-    const count = await pool.query('SELECT COUNT(*) FROM members WHERE association_id = ?', [id]);
+    const count = await pool.query('SELECT COUNT(*) FROM members WHERE association_id = ? AND hide_status = 0', [id]);
     const members_count = count[0][0]["COUNT(*)"];
     return members_count;
 }
 
 // retourne le membre en fonction de son id et de son association
 export async function getMemberById(member_id, association_id) {
-    const [rows] = await pool.query('SELECT * FROM members WHERE id = ? AND association_id = ?', [member_id, association_id]);
+    const [rows] = await pool.query('SELECT * FROM members WHERE id = ? AND association_id = ? AND hide_status = 0', [member_id, association_id]);
 
     // Si aucun membre n'est trouvé, renvoyer null ou undefined
     if (rows.length === 0) {
