@@ -35,7 +35,6 @@ export async function createMember(street, postal_code, city, mail, birthday, co
         const certificateBytes = new Uint8Array(certificateBuffer);
         certificate = Buffer.from(certificateBytes)
     }
-
     if (rib !== null){
         const ribBuffer = await rib.arrayBuffer();
         const ribBytes = new Uint8Array(ribBuffer)
@@ -58,41 +57,42 @@ export async function createMember(street, postal_code, city, mail, birthday, co
 }
 
 // Modifie les détails d'un membre existant
-export async function updateMemberDetails(detailsId, addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, rib) {
+export async function updateMemberDetails(detailsId, addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, rib, information) {
     if (image_rights_signature === null && rib === null) {
         await pool.query(`
         UPDATE member_details
-        SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?
+        SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, information = ?
         WHERE id = ?
-    `,
-            [addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, detailsId]);
+    `,[addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, information, detailsId]);
     } else if(rib === null && image_rights_signature !== null) {
         await pool.query(`
         UPDATE member_details
-        SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, image_rights_signature = ?
+        SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, image_rights_signature = ?, information = ?
         WHERE id = ?
-    `,
-            [addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, detailsId]);
+    `,[addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, information, detailsId]);
     } else if(rib !== null && image_rights_signature === null) {
         await pool.query(`
         UPDATE member_details
-        SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, rib = ?
+        SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, rib = ?, information = ?
         WHERE id = ?
-    `,
-            [addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, rib, detailsId]);
+    `,[addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, rib, information, detailsId]);
 }   else if(rib !== null && image_rights_signature !== null) {
-    await pool.query(`
-    UPDATE member_details
-    SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, image_rights_signature = ?, rib = ?
-    WHERE id = ?
-`,
-        [addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, rib, detailsId]);
+        await pool.query(`
+        UPDATE member_details
+        SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, image_rights_signature = ?, rib = ?, information = ?
+        WHERE id = ?
+    `,[addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, rib, information, detailsId]);
 }
 }
 
 
 // Modifie un membre existant
-export async function updateMember(member_id, address_id, member_details_id, street, postal_code, city, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, firstname, lastname, file_status, payment_status, photo, association_id, certificate, subscription, paid, rib) {
+export async function updateMember(member_id, address_id, member_details_id, 
+    street, postal_code, city, mail, birthday, //ok
+    contraindication, phone_number, emergency_number, birthplace, //ok
+    living_with, image_rights_signature, firstname, lastname, file_status,//ok
+    payment_status, photo, association_id, certificate,
+    subscription, paid, rib, information) {
     // on traite les blobs s'ils sont pas null
    // on traite les blobs s'ils sont pas null
    if (photo !== null) {
@@ -105,7 +105,6 @@ export async function updateMember(member_id, address_id, member_details_id, str
         const image_rights_signatureBytes = new Uint8Array(image_rights_signatureBuffer);
         image_rights_signature = Buffer.from(image_rights_signatureBytes)
     }
-    console.log(certificate);
     if (certificate !== null && certificate !== undefined){
         const certificateBuffer = await certificate.arrayBuffer();
         const certificateBytes = new Uint8Array(certificateBuffer);
@@ -119,8 +118,11 @@ export async function updateMember(member_id, address_id, member_details_id, str
     // Modifier l'adresse existante
     await updateAddress(address_id, street, postal_code, city);
 
+    console.log("niveau 2", information);
+
+
     // Modifier les détails du membre existant
-    await updateMemberDetails(member_details_id, address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib);
+    await updateMemberDetails(member_details_id, address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib, information);
 
     // Modifier le membre
     if (photo === null) {
@@ -140,6 +142,17 @@ export async function updateMember(member_id, address_id, member_details_id, str
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 // retourne tous les membres d'une association en fonction de son id
 export async function getMembers(id) {

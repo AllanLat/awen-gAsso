@@ -85,7 +85,6 @@ router.post("/", async (req, res) => {
         const certificate = blobFiles.certificate ? blobFiles.certificate[0] : null;
         const rib = blobFiles.rib ? blobFiles.rib[0] : null;
 
-        data.information = "toto le zigoto";
 
         // Créer le membre avec toutes les informations
         const member = await createMember(data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, certificate, data.subscription, data.paid, rib, data.information);
@@ -137,7 +136,14 @@ router.put("/:member_id", async (req, res) => {
         const member_details = await getMemberDetailsById(member_details_id);
         const address_id = member_details.address_id;
         try {
-            const updatedMember = updateMember(member.id, address_id, member_details_id, data.street, data.postal_code, data.city, data.mail, data.birthday, data.contraindication, data.phone_number, data.emergency_number, data.birthplace, data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, data.payment_status, photo, req.auth.associationId, data.certificate, data.subscription, data.paid, data.certificate_medical, rib)
+
+            console.log('niveau Routes, data', data.information);
+            const updatedMember = updateMember(member.id, address_id, member_details_id,
+                data.street, data.postal_code, data.city, data.mail, data.birthday, 
+                data.contraindication, data.phone_number, data.emergency_number, data.birthplace,
+                data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, 
+                data.payment_status, photo, req.auth.associationId, certificate, 
+                data.subscription, data.paid, rib , data.information);
 
             res.status(200).json(updatedMember);
 
