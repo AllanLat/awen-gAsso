@@ -163,10 +163,10 @@ export async function getMembers(id) {
         // Si photo existe, la convertir en base64
         if (row.photo) {
             let base64Image = row.photo.toString('base64');
-
+            //console.log('juste la photo')
             if (row.certificate) {
                 let base64ImageCertificate = row.certificate.toString('base64');
-
+                    //console.log("row.certificate", row.certificate);
                 return {
                     ...row,
                     photo: base64Image,
@@ -174,6 +174,7 @@ export async function getMembers(id) {
                 }
             }
             else {
+                //console.log('juste la photo')
                  return {
                 ...row,
                 photo: base64Image
@@ -215,11 +216,25 @@ export async function getMemberById(member_id, association_id) {
         if (member.certificate) {
             let base64ImageCertificate = member.certificate.toString('base64');
 
-            return {
-                ...member,
-                photo: base64Image,
-                certificate: base64ImageCertificate
+            if (member.rib) {
+                let base64ImageRib = member.rib.toString('base64');
+
+                
+                return {
+                    ...member,
+                    photo: base64Image,
+                    certificate: base64ImageCertificate,
+                    rib: base64ImageRib
+                }
             }
+            else {
+                return {
+                    ...member,
+                    photo: base64Image,
+                    certificate: base64ImageCertificate
+                } 
+            }
+           
         }
         else {
              return {
