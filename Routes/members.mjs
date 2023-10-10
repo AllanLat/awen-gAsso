@@ -113,6 +113,7 @@ router.put("/:member_id", async (req, res) => {
 
     const files = req.files;
 
+    console.log(files);
 
     // on les transforme en objet avec 1 blob par fichier ou vide si pas de fichier
 
@@ -122,7 +123,7 @@ router.put("/:member_id", async (req, res) => {
 
     const photo = blobFiles.photo ? blobFiles.photo[0] : null;
     const image_rights_signature = blobFiles.image_rights_signature ? blobFiles.image_rights_signature[0] : null;
-    const certificate = blobFiles.certificate_medical ? blobFiles.certificate_medical[0] : null;
+    const certificate = blobFiles.certificate ? blobFiles.certificate[0] : null;
     const rib = blobFiles.rib ? blobFiles.rib[0] : null;
 
     const member = await getMemberById(req.params.member_id, req.auth.associationId);
@@ -137,7 +138,7 @@ router.put("/:member_id", async (req, res) => {
         const address_id = member_details.address_id;
         try {
 
-            console.log('niveau Routes, data', data.information);
+           // console.log('niveau route', certificate);
             const updatedMember = updateMember(member.id, address_id, member_details_id,
                 data.street, data.postal_code, data.city, data.mail, data.birthday, 
                 data.contraindication, data.phone_number, data.emergency_number, data.birthplace,

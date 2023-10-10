@@ -123,7 +123,7 @@ router.get("/:group_id/members", async (req, res) => {
 
 router.get("/:group_id/users", async (req, res) => {
     try {
-        console.log(req.auth.associationId);
+        //console.log(req.auth.associationId);
         const group = await getGroup(req.params.group_id, req.auth.associationId);
         if (!group) {
             return res.status(404).json("Le groupe n'existe pas.");

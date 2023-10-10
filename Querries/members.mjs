@@ -59,24 +59,28 @@ export async function createMember(street, postal_code, city, mail, birthday, co
 // Modifie les détails d'un membre existant
 export async function updateMemberDetails(detailsId, addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, rib, information) {
     if (image_rights_signature === null && rib === null) {
+        //console.log("Aucun changement")
         await pool.query(`
         UPDATE member_details
         SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, information = ?
         WHERE id = ?
     `,[addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, information, detailsId]);
     } else if(rib === null && image_rights_signature !== null) {
+        //console.log("changement que du certificat")
         await pool.query(`
         UPDATE member_details
         SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, image_rights_signature = ?, information = ?
         WHERE id = ?
     `,[addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, image_rights_signature, information, detailsId]);
     } else if(rib !== null && image_rights_signature === null) {
+        //console.log("changement que du rib")
         await pool.query(`
         UPDATE member_details
         SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, rib = ?, information = ?
         WHERE id = ?
     `,[addressId, mail, birthday, contraindication, phoneNumber, emergencyNumber, birthplace, livingWith, rib, information, detailsId]);
 }   else if(rib !== null && image_rights_signature !== null) {
+       // console.log("changement de certificat et rib")
         await pool.query(`
         UPDATE member_details
         SET address_id = ?, mail = ?, birthday = ?, contraindication = ?, phone_number = ?, emergency_number = ?, birthplace = ?, living_with = ?, image_rights_signature = ?, rib = ?, information = ?
@@ -118,21 +122,36 @@ export async function updateMember(member_id, address_id, member_details_id,
     // Modifier l'adresse existante
     await updateAddress(address_id, street, postal_code, city);
 
-    console.log("niveau 2", information);
-
 
     // Modifier les détails du membre existant
     await updateMemberDetails(member_details_id, address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib, information);
 
     // Modifier le membre
-    if (photo === null) {
+    if (photo === null && certificate === null) {
         await pool.query(`
         UPDATE members
         SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, association_id = ?, certificate = ?, subscription = ?, paid = paid + ?
         WHERE id = ?
     `,
             [firstname, lastname, file_status, payment_status, member_details_id, association_id, certificate, subscription, paid, member_id]);
-    } else {
+    } else if(photo === null && certificate !== null) {
+        await pool.query(`
+        UPDATE members
+        SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, association_id = ?, subscription = ?, certificate = ?, paid = paid + ?
+        WHERE id = ?
+    `,
+            [firstname, lastname, file_status, payment_status, member_details_id, association_id, subscription,  certificate, paid, member_id]);
+
+    }
+    else if (photo !== null && certificate === null) {
+        await pool.query(`
+        UPDATE members
+        SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, photo = ?, association_id = ?, subscription = ?, paid = paid + ?
+        WHERE id = ?
+    `,
+            [firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, subscription, paid, member_id]);
+    }
+    else {
         await pool.query(`
         UPDATE members
         SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, photo = ?, association_id = ?, certificate = ?, subscription = ?, paid = paid + ?
@@ -215,25 +234,13 @@ export async function getMemberById(member_id, association_id) {
 
         if (member.certificate) {
             let base64ImageCertificate = member.certificate.toString('base64');
+            console.log('le certificat existe');
 
-            if (member.rib) {
-                let base64ImageRib = member.rib.toString('base64');
-
-                
                 return {
                     ...member,
                     photo: base64Image,
                     certificate: base64ImageCertificate,
-                    rib: base64ImageRib
                 }
-            }
-            else {
-                return {
-                    ...member,
-                    photo: base64Image,
-                    certificate: base64ImageCertificate
-                } 
-            }
            
         }
         else {
@@ -262,10 +269,22 @@ export async function getMemberDetailsById(id) {
             let base64Image = member_details.image_rights_signature.toString('base64');
     
          
+            if (member_details.rib) {
+                let ribBase64 = member_details.rib.toString('base64');
+
+                return {
+                    ...member_details,
+                    image_rights_signature: base64Image,
+                    rib: ribBase64
+                }
+            }
+            else {
                  return {
                 ...member_details,
                 image_rights_signature: base64Image
+                }
             }
+                
         }
             else {
                 return member_details
