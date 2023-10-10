@@ -19,13 +19,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-    origin: 'https://localhost:3000', // Mettez l'origine de votre site Web ici
+    origin: 'https://g-asso.com', //l'origine de votre site Web ici
     methods: 'GET,POST,PUT,DELETE', // Les méthodes HTTP autorisées
     allowedHeaders: 'Content-Type,Authorization', // Les en-têtes autorisés
   };
   
   // Utiliser le middleware CORS
-  app.use(cors());
+  app.use(cors(corsOptions));
 
 // Set up multer to handle FormData
 const upload = multer({
