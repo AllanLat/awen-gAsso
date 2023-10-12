@@ -113,7 +113,7 @@ router.put("/:member_id", async (req, res) => {
 
     const files = req.files;
 
-    console.log(files);
+    //console.log(files);
 
     // on les transforme en objet avec 1 blob par fichier ou vide si pas de fichier
 
@@ -144,7 +144,7 @@ router.put("/:member_id", async (req, res) => {
                 data.contraindication, data.phone_number, data.emergency_number, data.birthplace,
                 data.living_with, image_rights_signature, data.firstname, data.lastname, data.file_status, 
                 data.payment_status, photo, req.auth.associationId, certificate, 
-                data.subscription, data.paid, rib , data.information);
+                data.subscription, data.paid, rib, data.information);
 
             res.status(200).json(updatedMember);
 

@@ -109,12 +109,12 @@ export async function updateMember(member_id, address_id, member_details_id,
         const image_rights_signatureBytes = new Uint8Array(image_rights_signatureBuffer);
         image_rights_signature = Buffer.from(image_rights_signatureBytes)
     }
-    if (certificate !== null && certificate !== undefined){
+    if (certificate !== null){
         const certificateBuffer = await certificate.arrayBuffer();
         const certificateBytes = new Uint8Array(certificateBuffer);
         certificate = Buffer.from(certificateBytes)
     }
-    if (rib !== null && rib !== undefined){
+    if (rib !== null){
         const ribBuffer = await rib.arrayBuffer();
         const ribBytes = new Uint8Array(ribBuffer);
         rib = Buffer.from(ribBytes);
@@ -127,13 +127,14 @@ export async function updateMember(member_id, address_id, member_details_id,
     await updateMemberDetails(member_details_id, address_id, mail, birthday, contraindication, phone_number, emergency_number, birthplace, living_with, image_rights_signature, rib, information);
 
     // Modifier le membre
-    if (photo === null && certificate === null) {
-        await pool.query(`
-        UPDATE members
-        SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, association_id = ?, certificate = ?, subscription = ?, paid = paid + ?
-        WHERE id = ?
-    `,
-            [firstname, lastname, file_status, payment_status, member_details_id, association_id, certificate, subscription, paid, member_id]);
+    if (photo !== null && certificate !== null) {
+            await pool.query(`
+            UPDATE members
+            SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, photo = ?, association_id = ?, certificate = ?, subscription = ?, paid = paid + ?
+            WHERE id = ?
+        `,
+                [firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, certificate, subscription, paid, member_id]);
+    
     } else if(photo === null && certificate !== null) {
         await pool.query(`
         UPDATE members
@@ -154,11 +155,11 @@ export async function updateMember(member_id, address_id, member_details_id,
     else {
         await pool.query(`
         UPDATE members
-        SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, photo = ?, association_id = ?, certificate = ?, subscription = ?, paid = paid + ?
+        SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, association_id = ?, subscription = ?, paid = paid + ?
         WHERE id = ?
     `,
-            [firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, certificate, subscription, paid, member_id]);
-    }
+            [firstname, lastname, file_status, payment_status, member_details_id, association_id, subscription, paid, member_id]);
+  }
 
 }
 
