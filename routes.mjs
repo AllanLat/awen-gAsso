@@ -1,5 +1,4 @@
 // routes.js
-
 import express from 'express';
 import cors from 'cors';
 import auth from './Middleware/auth.mjs';
@@ -25,7 +24,7 @@ const corsOptions = {
   };
   
   // Utiliser le middleware CORS
-  app.use(cors(corsOptions));
+  app.use(cors());
 
 // Set up multer to handle FormData
 const upload = multer({

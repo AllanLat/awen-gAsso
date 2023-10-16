@@ -15,5 +15,4 @@ dynamicImports().then(routes => {
   
   
     app.listen(8000);
-  
 });
