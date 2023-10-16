@@ -136,6 +136,8 @@ export async function updateMember(member_id, address_id, member_details_id,
                 [firstname, lastname, file_status, payment_status, member_details_id, photo, association_id, certificate, subscription, paid, member_id]);
     
     } else if(photo === null && certificate !== null) {
+
+        console.log(pool);
         await pool.query(`
         UPDATE members
         SET firstname = ?, lastname = ?, file_status = ?, payment_status = ?, member_details_id = ?, association_id = ?, subscription = ?, certificate = ?, paid = paid + ?
