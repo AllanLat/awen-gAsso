@@ -1,4 +1,4 @@
-// app.js
+// app.js 
 
 const dynamicImports = async () => {
   const { default: routes } = await import('./routes.mjs');
