@@ -58,13 +58,13 @@ app.use((req, res, next) => {
     });
 });
 
-// app.get("/api/v1/mp", async (req, res) => {
-//     const password = "Karine2200";
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     res.json({
-//         password: hashedPassword
-//     })
-// });
+app.get("/api/v1/mp", async (req, res) => {
+    const password = "Karine2200";
+    const hashedPassword = await bcrypt.hash(password, 10);
+    res.json({
+        password: hashedPassword
+    })
+});
 
 app.post("/api/v1/login", login);
 app.use('/api/v1/associations', auth, associations);
